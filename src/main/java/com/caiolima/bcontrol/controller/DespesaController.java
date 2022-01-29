@@ -49,7 +49,8 @@ public class DespesaController {
     @PutMapping("/{id}")
     public ResponseEntity<DespesaResponse> put(@PathVariable Long id, @RequestBody @Valid DespesaRequest request) {
         Despesa despesa = request.toModel();
-        despesa = service.put(id, despesa);
+        despesa.setId(id);
+        despesa = service.put(despesa);
         return ResponseEntity.ok(new DespesaResponse(despesa));
     }
 

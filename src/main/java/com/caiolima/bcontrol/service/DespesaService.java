@@ -25,7 +25,9 @@ public class DespesaService {
 
     @Transactional
     public Despesa save(Despesa despesa) {
-        validAsUniqueInTheMonth(despesa);
+        if(isDuplicateInMonth(despesa)) {
+            throw new RegistroDuplicadoException();
+        }
         return repository.save(despesa);
     }
 
@@ -39,12 +41,13 @@ public class DespesaService {
     }
 
     @Transactional
-    public Despesa put(Long id, Despesa despesa) {
-        if (!repository.existsById(id)) {
+    public Despesa put(Despesa despesa) {
+        if (!repository.existsById(despesa.getId())) {
             throw new NotFoundException();
         }
-        despesa.setId(id);
-        validAsUniqueInTheMonth(despesa);
+        if (isDuplicateInMonth(despesa)) {
+            throw new RegistroDuplicadoException();
+        }
         return repository.save(despesa);
     }
 
@@ -55,11 +58,9 @@ public class DespesaService {
         repository.deleteById(id);
     }
 
-    private void validAsUniqueInTheMonth(Despesa despesa) {
+    private boolean isDuplicateInMonth(Despesa despesa) {
         LocalDate dataStart = despesa.getData().with(TemporalAdjusters.firstDayOfMonth());
         LocalDate dataEnd = despesa.getData().with(TemporalAdjusters.lastDayOfMonth());
-        if (repository.isDuplicate(despesa.getDescricao(), dataStart, dataEnd, despesa.getId())) {
-            throw new RegistroDuplicadoException();
-        }
+        return repository.isDuplicate(despesa.getDescricao(), dataStart, dataEnd, despesa.getId());
     }
 }
