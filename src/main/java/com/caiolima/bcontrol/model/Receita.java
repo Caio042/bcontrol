@@ -4,6 +4,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "RECEITA")
-public class Receita extends Contavel{
+public class Receita extends RegistroFinanceiro {
 
 }
