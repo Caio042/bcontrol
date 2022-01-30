@@ -1,0 +1,231 @@
+{
+	"info": {
+		"_postman_id": "50e9687c-503e-4585-a550-33ecc165037f",
+		"name": "Budget Control",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cadastrar despesa",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"descricao\": \"mercado\",\n    \"valor\": 500.50,\n    \"data\": \"2022-01-27\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/despesas",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"despesas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar despesas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/despesas",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"despesas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar despesa 1",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"descricao\": \"Mercado\",\n    \"valor\": 600.00,\n    \"data\": \"2022-01-27\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/despesas/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"despesas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar despesa 1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/despesas/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"despesas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete despesa 1",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/despesas/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"despesas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar receita",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"descricao\": \"salario\",\n    \"valor\": 1500.35,\n    \"data\": \"2022-01-27\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receitas",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receitas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar receitas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/receitas",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receitas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar despesa 1",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"descricao\": \"Salario\",\n    \"valor\": 1500.35,\n    \"data\": \"2022-01-20\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receitas/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receitas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar receita 1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/receitas/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receitas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete receita 1",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/receitas/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receitas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
