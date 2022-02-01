@@ -31,8 +31,8 @@ public class ReceitaService {
         return repository.save(receita);
     }
 
-    public List<Receita> listAll() {
-        return repository.findAll();
+    public List<Receita> listAll(String descricao) {
+        return repository.findAllByDescricao(descricao);
     }
 
     public Receita findById(Long id) {

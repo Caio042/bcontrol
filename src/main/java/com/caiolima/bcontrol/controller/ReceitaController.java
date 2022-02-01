@@ -37,8 +37,8 @@ public class ReceitaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ReceitaResponse>> listAll() {
-        List<Receita> receitas = service.listAll();
+    public ResponseEntity<List<ReceitaResponse>> listAll(@RequestParam(required = false) String descricao) {
+        List<Receita> receitas = service.listAll(descricao);
         return ResponseEntity.ok(receitas
                 .stream()
                 .map(ReceitaResponse::new)

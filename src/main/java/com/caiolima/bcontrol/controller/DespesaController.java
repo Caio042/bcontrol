@@ -32,8 +32,8 @@ public class DespesaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<DespesaResponse>> listAll() {
-        List<Despesa> despesas = service.listAll();
+    public ResponseEntity<List<DespesaResponse>> listAll(@RequestParam(required = false) String descricao) {
+        List<Despesa> despesas = service.listAll(descricao);
         return ResponseEntity.ok(despesas
                 .stream()
                 .map(DespesaResponse::new)

@@ -36,8 +36,8 @@ public class DespesaService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    public List<Despesa> listAll() {
-        return repository.findAll();
+    public List<Despesa> listAll(String descricao) {
+        return repository.findAllByDescricao(descricao);
     }
 
     @Transactional
