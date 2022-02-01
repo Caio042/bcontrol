@@ -14,4 +14,9 @@ spring:
     #defer-datasource-initialization: truec
 
   h2:
-    console.enabled: true
+    console:
+      enabled: true
+
+  jackson:
+    mapper:
+      ACCEPT_CASE_INSENSITIVE_ENUMS: true

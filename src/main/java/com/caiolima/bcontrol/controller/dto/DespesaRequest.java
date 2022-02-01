@@ -1,5 +1,6 @@
 package com.caiolima.bcontrol.controller.dto;
 
+import com.caiolima.bcontrol.model.CategoriaDespesa;
 import com.caiolima.bcontrol.model.Despesa;
 
 import javax.validation.constraints.Min;
@@ -15,9 +16,13 @@ public record DespesaRequest(
         @Min(0)
         BigDecimal valor,
         @NotNull
-        LocalDate data) {
+        LocalDate data,
+        CategoriaDespesa categoria) {
 
     public Despesa toModel() {
-        return new Despesa(descricao(), valor(), data());
+        return new Despesa(descricao(),
+                valor(),
+                data(),
+                categoria() != null ? categoria() : CategoriaDespesa.OUTRAS);
     }
 }

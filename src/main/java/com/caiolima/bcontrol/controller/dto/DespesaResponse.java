@@ -1,5 +1,6 @@
 package com.caiolima.bcontrol.controller.dto;
 
+import com.caiolima.bcontrol.model.CategoriaDespesa;
 import com.caiolima.bcontrol.model.Despesa;
 
 import java.math.BigDecimal;
@@ -9,9 +10,10 @@ public record DespesaResponse(
         Long id,
         String descricao,
         BigDecimal valor,
-        LocalDate data) {
+        LocalDate data,
+        CategoriaDespesa categoria) {
 
     public DespesaResponse(Despesa despesa) {
-        this(despesa.getId(), despesa.getDescricao(), despesa.getValor(), despesa.getData());
+        this(despesa.getId(), despesa.getDescricao(), despesa.getValor(), despesa.getData(), despesa.getCategoria());
     }
 }
