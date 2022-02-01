@@ -15,4 +15,7 @@ public interface DespesaRepository extends JpaRepository<Despesa, Long> {
 
     @Query(value = "SELECT d FROM Despesa d WHERE (:descricao IS NULL OR d.descricao LIKE %:descricao%)")
     List<Despesa> findAllByDescricao(@Param("descricao") String descricao);
+
+    @Query(value = "SELECT d FROM Despesa d WHERE YEAR(d.data) = :ano AND MONTH(d.data) = :mes")
+    List<Despesa> findAllByDate(@Param("ano") Integer ano, @Param("mes") Integer mes);
 }

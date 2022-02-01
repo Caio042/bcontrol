@@ -46,6 +46,16 @@ public class DespesaController {
         return ResponseEntity.ok(new DespesaResponse(despesa));
     }
 
+    @GetMapping("{ano}/{mes}")
+    ResponseEntity<List<DespesaResponse>> findAllByDate(@PathVariable Integer ano, @PathVariable Integer mes) {
+        List<Despesa> despesas = service.findAllByDate(ano, mes);
+
+        return ResponseEntity.ok(despesas
+                .stream()
+                .map(DespesaResponse::new)
+                .toList());
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<DespesaResponse> put(@PathVariable Long id, @RequestBody @Valid DespesaRequest request) {
         Despesa despesa = request.toModel();

@@ -63,4 +63,8 @@ public class ReceitaService {
         }
         repository.deleteById(id);
     }
+
+    public List<Receita> findAllByDate(Integer ano, Integer mes) {
+        return repository.findAllByDate(ano, mes);
+    }
 }

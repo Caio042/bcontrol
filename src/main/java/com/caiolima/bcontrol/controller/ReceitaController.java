@@ -51,6 +51,16 @@ public class ReceitaController {
         return ResponseEntity.ok(new ReceitaResponse(receita));
     }
 
+    @GetMapping("/{ano}/{mes}")
+    ResponseEntity<List<ReceitaResponse>> findAllByDate(@PathVariable Integer ano, @PathVariable Integer mes) {
+        List<Receita> receitas = service.findAllByDate(ano, mes);
+
+        return ResponseEntity.ok(receitas
+                .stream()
+                .map(ReceitaResponse::new)
+                .toList());
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<ReceitaResponse> put(@PathVariable Long id, @RequestBody ReceitaRequest request) {
         Receita receita = request.toModel();

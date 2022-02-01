@@ -63,4 +63,8 @@ public class DespesaService {
         LocalDate dataEnd = despesa.getData().with(TemporalAdjusters.lastDayOfMonth());
         return repository.isDuplicate(despesa.getDescricao(), dataStart, dataEnd, despesa.getId());
     }
+
+    public List<Despesa> findAllByDate(Integer ano, Integer mes) {
+        return repository.findAllByDate(ano, mes);
+    }
 }

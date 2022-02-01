@@ -15,7 +15,9 @@ public interface ReceitaRepository extends JpaRepository<Receita, Long> {
     @Query(value = "select (count(r) > 0) from Receita r where r.descricao = :descricao and r.data between :dataStart and :dataEnd and (:id is null or r.id <> :id)")
     boolean isDuplicate(@Param("descricao") String descricao, @Param("dataStart") LocalDate dataStart, @Param("dataEnd") LocalDate dataEnd, @Param("id") Long id);
 
-    @Query(value = "SELECT r from Receita r where (:descricao is null or r.descricao LIKE %:descricao%)")
+    @Query(value = "SELECT r FROM Receita r WHERE (:descricao IS NULL OR r.descricao LIKE %:descricao%)")
     List<Receita> findAllByDescricao(@Param("descricao") String descricao);
 
+    @Query(value = "SELECT r from Receita r WHERE YEAR(r.data) = :ano AND MONTH(r.data) = :mes")
+    List<Receita> findAllByDate(@Param("ano") Integer ano, @Param("mes") Integer mes);
 }
