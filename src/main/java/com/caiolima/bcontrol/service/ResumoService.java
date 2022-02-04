@@ -2,6 +2,7 @@ package com.caiolima.bcontrol.service;
 
 import com.caiolima.bcontrol.controller.dto.GastoPorCategoria;
 import com.caiolima.bcontrol.controller.dto.ResumoDTO;
+import com.caiolima.bcontrol.model.CategoriaDespesa;
 import com.caiolima.bcontrol.model.Despesa;
 import com.caiolima.bcontrol.model.RegistroFinanceiro;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,11 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.reducing;
 
 @Service
 public class ResumoService {
@@ -37,19 +42,18 @@ public class ResumoService {
     }
 
     private List<GastoPorCategoria> groupByCategoria(List<Despesa> despesas) {
-        return despesas
+        Map<CategoriaDespesa, BigDecimal> valoresPorCategoriaMap = despesas
                 .stream()
                 .collect(Collectors
-                        .groupingBy(Despesa::getCategoria))
+                        .groupingBy(Despesa::getCategoria,
+                                mapping(RegistroFinanceiro::getValor, reducing(BigDecimal.ZERO, BigDecimal::add))));
+
+        return valoresPorCategoriaMap
                 .entrySet()
                 .stream()
-                .map(categoriaDespesaListEntry ->
-                        new GastoPorCategoria(categoriaDespesaListEntry.getKey(),
-                                categoriaDespesaListEntry
-                                        .getValue()
-                                        .stream()
-                                        .map(RegistroFinanceiro::getValor)
-                                        .reduce(BigDecimal.ZERO, BigDecimal::add)))
+                .map(valorPorCategoria ->
+                        new GastoPorCategoria(valorPorCategoria.getKey(),
+                        valorPorCategoria.getValue()))
                 .toList();
     }
 }
