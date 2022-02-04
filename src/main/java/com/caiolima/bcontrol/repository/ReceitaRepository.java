@@ -6,8 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ReceitaRepository extends JpaRepository<Receita, Long> {
@@ -20,4 +22,7 @@ public interface ReceitaRepository extends JpaRepository<Receita, Long> {
 
     @Query(value = "SELECT r from Receita r WHERE YEAR(r.data) = :ano AND MONTH(r.data) = :mes")
     List<Receita> findAllByDate(@Param("ano") Integer ano, @Param("mes") Integer mes);
+
+    @Query(value = "SELECT SUM (r.valor) FROM Receita r WHERE YEAR(r.data) = :ano AND MONTH(r.data) = :mes")
+    Optional<BigDecimal> getValorNoMes(@Param("ano")Integer ano, @Param("mes") Integer mes);
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
@@ -66,5 +67,10 @@ public class ReceitaService {
 
     public List<Receita> findAllByDate(Integer ano, Integer mes) {
         return repository.findAllByDate(ano, mes);
+    }
+
+    public BigDecimal getValorNoMes(Integer ano, Integer mes) {
+        return repository.getValorNoMes(ano, mes)
+                .orElse(BigDecimal.ZERO);
     }
 }
