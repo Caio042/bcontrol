@@ -41,7 +41,7 @@ public class DespesaService {
     }
 
     @Transactional
-    public Despesa put(Despesa despesa) {
+    public Despesa update(Despesa despesa) {
         if (!repository.existsById(despesa.getId())) {
             throw new NotFoundException();
         }

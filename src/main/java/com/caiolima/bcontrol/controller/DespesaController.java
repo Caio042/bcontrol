@@ -60,7 +60,7 @@ public class DespesaController {
     public ResponseEntity<DespesaResponse> put(@PathVariable Long id, @RequestBody @Valid DespesaRequest request) {
         Despesa despesa = request.toModel();
         despesa.setId(id);
-        despesa = service.put(despesa);
+        despesa = service.update(despesa);
         return ResponseEntity.ok(new DespesaResponse(despesa));
     }
 

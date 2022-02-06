@@ -65,7 +65,7 @@ public class ReceitaController {
     public ResponseEntity<ReceitaResponse> put(@PathVariable Long id, @RequestBody ReceitaRequest request) {
         Receita receita = request.toModel();
         receita.setId(id);
-        receita = service.put(receita);
+        receita = service.update(receita);
         return ResponseEntity.ok(new ReceitaResponse(receita));
     }
 

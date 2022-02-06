@@ -42,7 +42,7 @@ public class ReceitaService {
     }
 
     @Transactional
-    public Receita put(Receita receita) {
+    public Receita update(Receita receita) {
         if (!repository.existsById(receita.getId())) {
             throw new NotFoundException();
         }
