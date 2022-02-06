@@ -19,11 +19,15 @@ import static java.util.stream.Collectors.reducing;
 @Service
 public class ResumoService {
 
-    @Autowired
-    private DespesaService despesaService;
+    private final DespesaService despesaService;
+
+    private final ReceitaService receitaService;
 
     @Autowired
-    private ReceitaService receitaService;
+    public ResumoService(DespesaService despesaService, ReceitaService receitaService) {
+        this.despesaService = despesaService;
+        this.receitaService = receitaService;
+    }
 
     public ResumoDTO generateResumo(Integer ano, Integer mes) {
 

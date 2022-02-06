@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/resumo")
 public class ResumoController {
 
+    private final ResumoService service;
+
     @Autowired
-    private ResumoService service;
+    public ResumoController(ResumoService service) {
+        this.service = service;
+    }
 
     @GetMapping("/{ano}/{mes}")
     public ResponseEntity<ResumoDTO> monthAbstract(@PathVariable Integer ano, @PathVariable Integer mes) {
