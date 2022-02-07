@@ -6,224 +6,320 @@
 	},
 	"item": [
 		{
-			"name": "Cadastrar despesa",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"descricao\": \"mercado\",\n    \"valor\": 500.50,\n    \"data\": \"2022-01-27\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+			"name": "Despesas",
+			"item": [
+				{
+					"name": "Mercado 27/01",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"descricao\": \"mercado\",\n    \"valor\": 500.50,\n    \"data\": \"2022-01-27\",\n    \"categoria\":\"ALIMENTACAO\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/despesas",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"despesas"
+							]
+						},
+						"description": "Cadastro de uma nova despesa."
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "localhost:8080/despesas",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"despesas"
-					]
+				{
+					"name": "Listar despesas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/despesas?descricao=mercado",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"despesas"
+							],
+							"query": [
+								{
+									"key": "descricao",
+									"value": "mercado"
+								}
+							]
+						},
+						"description": "Listar todas as despesas, permitindo pesquisar por descrição, parâmetro não obrigatório."
+					},
+					"response": []
+				},
+				{
+					"name": "Por data 03/2022",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/despesas/2022/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"despesas",
+								"2022",
+								"3"
+							]
+						},
+						"description": "Pesquisa as despesas por data, nesse caso março de 2022."
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar despesa 1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"descricao\": \"Mercado\",\n    \"valor\": 600.00,\n    \"data\": \"2022-01-27\",\n    \"categoria\":\"ALIMENTACAO\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/despesas/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"despesas",
+								"1"
+							]
+						},
+						"description": "Atualiza uma despesa."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete despesa 1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/despesas/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"despesas",
+								"1"
+							]
+						},
+						"description": "Deleta despesa por id."
+					},
+					"response": []
+				},
+				{
+					"name": "Listar despesa 1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/despesas/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"despesas",
+								"1"
+							]
+						},
+						"description": "Busca detalhes de uma despesa específica por id."
+					},
+					"response": []
 				}
-			},
-			"response": []
+			],
+			"description": "Operações possíveis com despesas"
 		},
 		{
-			"name": "Listar despesas",
+			"name": "Receitas",
+			"item": [
+				{
+					"name": "Salario 05/01",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"descricao\": \"salario\",\n    \"valor\": 1500.35,\n    \"data\": \"2022-01-05\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/receitas",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receitas"
+							]
+						},
+						"description": "Cadastrar uma nova receita."
+					},
+					"response": []
+				},
+				{
+					"name": "Listar receitas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/receitas?descricao=salario",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receitas"
+							],
+							"query": [
+								{
+									"key": "descricao",
+									"value": "salario"
+								}
+							]
+						},
+						"description": "Busca todas as receitas, permitindo filtrar por descrição, parâmetro não obrigatório."
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar respesa 1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"descricao\": \"Salario\",\n    \"valor\": 1500.35,\n    \"data\": \"2022-01-20\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/receitas/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receitas",
+								"1"
+							]
+						},
+						"description": "Atualiza uma receita existente."
+					},
+					"response": []
+				},
+				{
+					"name": "Listar receita 1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/receitas/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receitas",
+								"1"
+							]
+						},
+						"description": "Exibe detalhes de uma receita específica através do id."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete receita 1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/receitas/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receitas",
+								"1"
+							]
+						},
+						"description": "Deletar receita por id."
+					},
+					"response": []
+				},
+				{
+					"name": "Listar receitas 03/2022",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/receitas/2022/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"receitas",
+								"2022",
+								"3"
+							]
+						},
+						"description": "Lista as receitas em uma data específica, nesse caso março de 2022."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Resumo 01/2022",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/despesas",
+					"raw": "localhost:8080/resumo/2022/01",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"despesas"
+						"resumo",
+						"2022",
+						"01"
 					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Atualizar despesa 1",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"descricao\": \"Mercado\",\n    \"valor\": 600.00,\n    \"data\": \"2022-01-27\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
 				},
-				"url": {
-					"raw": "localhost:8080/despesas/1",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"despesas",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Listar despesa 1",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/despesas/1",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"despesas",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete despesa 1",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/despesas/1",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"despesas",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Cadastrar receita",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"descricao\": \"salario\",\n    \"valor\": 1500.35,\n    \"data\": \"2022-01-27\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/receitas",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"receitas"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Listar receitas",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/receitas",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"receitas"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Atualizar despesa 1",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"descricao\": \"Salario\",\n    \"valor\": 1500.35,\n    \"data\": \"2022-01-20\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/receitas/1",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"receitas",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Listar receita 1",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/receitas/1",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"receitas",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete receita 1",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/receitas/1",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"receitas",
-						"1"
-					]
-				}
+				"description": "Trás um resumo mensal. Nesse caso janeiro de 2022."
 			},
 			"response": []
 		}

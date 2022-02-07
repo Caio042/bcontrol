@@ -2,8 +2,11 @@ package com.caiolima.bcontrol.controller;
 
 import com.caiolima.bcontrol.controller.dto.DespesaRequest;
 import com.caiolima.bcontrol.controller.dto.DespesaResponse;
+
 import com.caiolima.bcontrol.model.Despesa;
 import com.caiolima.bcontrol.service.DespesaService;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +24,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+@Tag(name = "Despesas", description = "Operações relacionadas a despesas")
 @RestController
 @RequestMapping("/despesas")
 public class DespesaController {
@@ -78,7 +82,7 @@ public class DespesaController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> delete (@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }

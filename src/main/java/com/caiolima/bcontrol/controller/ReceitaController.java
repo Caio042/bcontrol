@@ -4,6 +4,7 @@ import com.caiolima.bcontrol.controller.dto.ReceitaRequest;
 import com.caiolima.bcontrol.controller.dto.ReceitaResponse;
 import com.caiolima.bcontrol.model.Receita;
 import com.caiolima.bcontrol.service.ReceitaService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +22,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+@Tag(name = "Receitas", description = "Operações relacionadas a receitas financeiras")
 @RestController
 @RequestMapping("/receitas")
 public class ReceitaController {

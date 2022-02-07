@@ -16,13 +16,13 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ResponseEntity<ResponseMessage> notFoundHandler(NotFoundException exception) {
-        return new ResponseEntity<>(new ResponseMessage(HttpStatus.NOT_FOUND, exception.getMessage()), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new ResponseMessage(HttpStatus.NOT_FOUND.value(), exception.getMessage()), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(RegistroDuplicadoException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ResponseEntity<ResponseMessage> registroDuplicadoHandler(RegistroDuplicadoException exception) {
-        return new ResponseEntity<>(new ResponseMessage(HttpStatus.BAD_REQUEST, exception.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ResponseMessage(HttpStatus.BAD_REQUEST.value(), exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }
