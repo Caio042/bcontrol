@@ -27,3 +27,9 @@ springdoc:
 info:
   app:
     version: '@project.version@'
+
+jwt:
+  secret: segredo
+  expiration:
+    access: 3600000 #uma hora
+    refresh: 43200000 #doze horas
