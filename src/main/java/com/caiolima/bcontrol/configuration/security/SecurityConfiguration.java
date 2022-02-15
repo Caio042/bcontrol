@@ -22,13 +22,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UsuarioService usuarioService;
     private final PasswordEncoder passwordEncoder;
-    private final JWTUtil jwtUtil;
+    private final JWTService jwtService;
 
     @Autowired
-    public SecurityConfiguration(UsuarioService usuarioService, PasswordEncoder passwordEncoder, JWTUtil jwtUtil) {
+    public SecurityConfiguration(UsuarioService usuarioService, PasswordEncoder passwordEncoder, JWTService jwtService) {
         this.usuarioService = usuarioService;
         this.passwordEncoder = passwordEncoder;
-        this.jwtUtil = jwtUtil;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -44,15 +44,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "login/**",
                         "/swagger-ui/**",
                         "/v3/api-docs/**",
-                        "/swagger-ui.html")
+                        "/swagger-ui.html",
+                        "/h2-console/**")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilter(new AuthenticationFilter(jwtUtil, authenticationManagerBean()))
-                .addFilterBefore(new AuthorizationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+                .addFilter(new AuthenticationFilter(jwtService, authenticationManagerBean()))
+                .addFilterBefore(new AuthorizationFilter(jwtService), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
@@ -63,6 +64,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html");
+        web.ignoring().antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/h2-console/**");
     }
 }

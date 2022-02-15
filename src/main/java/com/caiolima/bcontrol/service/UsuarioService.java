@@ -1,7 +1,6 @@
 package com.caiolima.bcontrol.service;
 
-import com.caiolima.bcontrol.exception.DuplicateUsername;
-import com.caiolima.bcontrol.exception.NotFoundException;
+import com.caiolima.bcontrol.exception.DuplicateUsernameException;
 import com.caiolima.bcontrol.model.Usuario;
 import com.caiolima.bcontrol.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,34 +27,32 @@ public class UsuarioService implements UserDetailsService {
     @Transactional
     public Usuario save(Usuario usuario) {
         if (repository.existsByUsername(usuario.getUsername())) {
-            throw new DuplicateUsername();
+            throw new DuplicateUsernameException();
         }
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         return repository.save(usuario);
     }
 
-    public Usuario findByUserName(String userName) {
+    public Usuario findByUsername(String userName) {
         return repository.findByUsername(userName)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não existe"));
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return findByUserName(username);
+        return findByUsername(username);
     }
 
     @Transactional
-    public Usuario atualize(Usuario usuario) {
-        Usuario usuarioDB = findByUserName(usuario.getUsername());
+    public Usuario update(Usuario usuario) {
+        Usuario usuarioDB = findByUsername(usuario.getUsername());
         usuario.setId(usuarioDB.getId());
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         return repository.save(usuario);
     }
 
-    public void delete(Long id) {
-        if (!repository.existsById(id)) {
-            throw new NotFoundException();
-        }
-        repository.deleteById(id);
+    @Transactional
+    public void delete(String username) {
+        repository.deleteByUsername(username);
     }
 }

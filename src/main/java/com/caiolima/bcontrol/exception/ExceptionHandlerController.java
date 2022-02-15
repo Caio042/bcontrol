@@ -20,9 +20,30 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(RegistroDuplicadoException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ResponseBody
     public ResponseEntity<ResponseMessage> registroDuplicadoHandler(RegistroDuplicadoException exception) {
-        return new ResponseEntity<>(new ResponseMessage(HttpStatus.BAD_REQUEST.value(), exception.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ResponseMessage(HttpStatus.UNPROCESSABLE_ENTITY.value(), exception.getMessage()), HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public ResponseEntity<ResponseMessage> unauthorizedHandler(UnauthorizedException exception) {
+        return new ResponseEntity<>(new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), exception.getMessage()), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public ResponseEntity<ResponseMessage> invalidTokenHander(InvalidTokenException exception) {
+        return new ResponseEntity<>(new ResponseMessage(HttpStatus.UNAUTHORIZED.value(), exception.getMessage()), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(DuplicateUsernameException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ResponseBody
+    public ResponseEntity<ResponseMessage> duplicateUsernameHandler(DuplicateUsernameException exception) {
+        return new ResponseEntity<>(new ResponseMessage(HttpStatus.UNPROCESSABLE_ENTITY.value(), exception.getMessage()), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 }

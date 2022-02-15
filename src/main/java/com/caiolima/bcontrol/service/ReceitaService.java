@@ -2,6 +2,7 @@ package com.caiolima.bcontrol.service;
 
 import com.caiolima.bcontrol.exception.NotFoundException;
 import com.caiolima.bcontrol.exception.RegistroDuplicadoException;
+import com.caiolima.bcontrol.exception.UnauthorizedException;
 import com.caiolima.bcontrol.model.Receita;
 import com.caiolima.bcontrol.repository.ReceitaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,19 +37,22 @@ public class ReceitaService {
         return repository.findAllByDescricao(descricao);
     }
 
-    public Receita findById(Long id) {
-        return repository.findById(id)
+    public Receita findById(Long id, String username) {
+        Receita receita = repository.findById(id)
                 .orElseThrow(NotFoundException::new);
+        if (!username.equals(receita.getUsuario().getUsername())) {
+            throw new UnauthorizedException();
+        }
+        return receita;
     }
 
     @Transactional
-    public Receita update(Receita receita) {
-        if (!repository.existsById(receita.getId())) {
-            throw new NotFoundException();
-        }
+    public Receita update(Receita receita, String username) {
         if (isDuplicateInMonth(receita)) {
             throw new RegistroDuplicadoException();
         }
+        Receita receitaDB = findById(receita.getId(), username);
+        receita.setUsuario(receitaDB.getUsuario());
         return repository.save(receita);
     }
 
@@ -58,10 +62,9 @@ public class ReceitaService {
         return repository.isDuplicate(receita.getDescricao(), dataStart, dataEnd, receita.getId());
     }
 
-    public void deleteById(Long id) {
-        if (!repository.existsById(id)) {
-            throw new NotFoundException();
-        }
+    @Transactional
+    public void deleteById(Long id, String username) {
+        findById(id, username);
         repository.deleteById(id);
     }
 

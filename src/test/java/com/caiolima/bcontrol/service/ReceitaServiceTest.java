@@ -45,7 +45,7 @@ class ReceitaServiceTest implements WithAssertions {
         Receita receita = receitaSalario(1L);
         when(repository.findById(1L)).thenReturn(Optional.of(receita));
 
-        assertThat(service.findById(1L))
+        assertThat(service.findById(1L, null))
                 .as("Não deve ser nulo")
                 .isNotNull()
                 .as("Não deve conter campos nulos")
@@ -56,7 +56,7 @@ class ReceitaServiceTest implements WithAssertions {
 
         assertThatNoException()
                 .as("Não deve disparar exception")
-                .isThrownBy(() -> service.findById(1L));
+                .isThrownBy(() -> service.findById(1L, null));
 
         verify(repository, times(2)).findById(1L);
     }
@@ -69,7 +69,7 @@ class ReceitaServiceTest implements WithAssertions {
 
         assertThatExceptionOfType(NotFoundException.class)
                 .as("Deve disparar exceção caso repository não encontre receita com id")
-                .isThrownBy(() -> service.findById(99L))
+                .isThrownBy(() -> service.findById(99L, null))
                 .as("Deve ter a mensagem certa")
                 .withMessage("Registro não encontrado");
 
@@ -125,7 +125,7 @@ class ReceitaServiceTest implements WithAssertions {
 
         assertThatExceptionOfType(NotFoundException.class)
                 .as("Deve disparar exceção caso repository não encontre receita com id")
-                .isThrownBy(() -> service.update(receita))
+                .isThrownBy(() -> service.update(receita, null))
                 .as("Com a mensagem certa")
                 .withMessage("Registro não encontrado");
 
@@ -143,7 +143,7 @@ class ReceitaServiceTest implements WithAssertions {
 
         assertThatExceptionOfType(RegistroDuplicadoException.class)
                 .as("Deve disparar exceção caso registro esteja duplicado")
-                .isThrownBy(() -> service.update(receita))
+                .isThrownBy(() -> service.update(receita, null))
                 .as("Com a mensagem certa")
                 .withMessage("Registro já feito no mesmo mês, com a mesma descrição");
 
@@ -159,7 +159,7 @@ class ReceitaServiceTest implements WithAssertions {
 
         assertThatExceptionOfType(NotFoundException.class)
                 .as("Deveria disparar exception")
-                .isThrownBy(() -> service.deleteById(99L))
+                .isThrownBy(() -> service.deleteById(99L, null))
                 .as("Com a mensagem certa")
                 .withMessage("Registro não encontrado");
 

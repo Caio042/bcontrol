@@ -23,6 +23,7 @@ spring:
 
 springdoc:
   default-produces-media-type: application/json
+  show-login-endpoint: true
 
 info:
   app:

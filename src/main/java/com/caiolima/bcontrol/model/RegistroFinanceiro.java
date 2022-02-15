@@ -7,11 +7,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -39,4 +35,15 @@ public abstract class RegistroFinanceiro {
     @NonNull
     @Column(name = "DATA", nullable = false)
     private LocalDate data;
+
+    @ManyToOne
+    @JoinColumn(name = "USUARIO_ID", nullable = false)
+    private Usuario usuario;
+
+    protected RegistroFinanceiro(Long id, @NonNull String descricao, @NonNull BigDecimal valor, @NonNull LocalDate data) {
+        this.id = id;
+        this.descricao = descricao;
+        this.valor = valor;
+        this.data = data;
+    }
 }

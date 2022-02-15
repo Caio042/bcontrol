@@ -10,14 +10,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.io.Serializable;
+import javax.persistence.Table;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario implements UserDetails, Serializable {
+@Table(name = "USUARIO")
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

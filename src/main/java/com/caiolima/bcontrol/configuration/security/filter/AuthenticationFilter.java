@@ -1,10 +1,9 @@
 package com.caiolima.bcontrol.configuration.security.filter;
 
-import com.caiolima.bcontrol.configuration.security.JWTUtil;
-import com.caiolima.bcontrol.controller.dto.TokenResponse;
+import com.caiolima.bcontrol.configuration.security.JWTService;
+import com.caiolima.bcontrol.controller.dto.TokenDTO;
 import com.caiolima.bcontrol.model.Usuario;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.micrometer.core.instrument.util.IOUtils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,18 +17,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 
 @Slf4j
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 
-    private final JWTUtil jwtUtil;
+    private final JWTService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationFilter(JWTUtil jwtUtil, AuthenticationManager authenticationManager) {
-        this.jwtUtil = jwtUtil;
+    public AuthenticationFilter(JWTService jwtService, AuthenticationManager authenticationManager) {
+        this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
     }
 
@@ -52,7 +50,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                                             Authentication authResult) throws IOException {
 
         Usuario usuario = (Usuario) authResult.getPrincipal();
-        TokenResponse tokens = jwtUtil.generateToken(usuario);
+        TokenDTO tokens = jwtService.generateToken(usuario);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
     }

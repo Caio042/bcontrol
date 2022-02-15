@@ -2,6 +2,7 @@ package com.caiolima.bcontrol.service;
 
 import com.caiolima.bcontrol.exception.NotFoundException;
 import com.caiolima.bcontrol.exception.RegistroDuplicadoException;
+import com.caiolima.bcontrol.exception.UnauthorizedException;
 import com.caiolima.bcontrol.model.Despesa;
 import com.caiolima.bcontrol.repository.DespesaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,14 @@ public class DespesaService {
         return repository.save(despesa);
     }
 
-    public Despesa findById(Long id) {
-        return repository.findById(id)
+    public Despesa findById(Long id, String username) {
+
+        Despesa despesa = repository.findById(id)
                 .orElseThrow(NotFoundException::new);
+        if (!username.equals(despesa.getUsuario().getUsername())) {
+            throw new UnauthorizedException();
+        }
+        return despesa;
     }
 
     public List<Despesa> listAll(String descricao) {
@@ -41,20 +47,18 @@ public class DespesaService {
     }
 
     @Transactional
-    public Despesa update(Despesa despesa) {
-        if (!repository.existsById(despesa.getId())) {
-            throw new NotFoundException();
-        }
+    public Despesa update(Despesa despesa, String username) {
         if (isDuplicateInMonth(despesa)) {
             throw new RegistroDuplicadoException();
         }
+        Despesa despesaDB = findById(despesa.getId(), username);
+        despesa.setUsuario(despesaDB.getUsuario());
         return repository.save(despesa);
     }
 
-    public void deleteById(Long id) {
-        if (!repository.existsById(id)) {
-            throw new NotFoundException();
-        }
+    @Transactional
+    public void deleteById(Long id, String username) {
+        findById(id, username);
         repository.deleteById(id);
     }
 

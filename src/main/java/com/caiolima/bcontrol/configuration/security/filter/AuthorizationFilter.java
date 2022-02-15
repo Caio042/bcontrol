@@ -1,7 +1,7 @@
 package com.caiolima.bcontrol.configuration.security.filter;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.caiolima.bcontrol.configuration.security.JWTUtil;
+import com.caiolima.bcontrol.configuration.security.JWTService;
 import com.caiolima.bcontrol.controller.dto.ResponseMessage;
 import com.caiolima.bcontrol.exception.InvalidTokenException;
 import com.caiolima.bcontrol.model.Usuario;
@@ -23,10 +23,10 @@ import java.io.IOException;
 @Slf4j
 public class AuthorizationFilter extends OncePerRequestFilter {
 
-    private final JWTUtil jwtUtil;
+    private final JWTService jwtService;
 
-    public AuthorizationFilter(JWTUtil jwtUtil) {
-        this.jwtUtil = jwtUtil;
+    public AuthorizationFilter(JWTService jwtService) {
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -39,9 +39,9 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         }
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         try {
-            Usuario usuario = jwtUtil.decodeJWT(authorizationHeader);
+            Usuario usuario = jwtService.decodeJWT(authorizationHeader);
 
-            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(usuario.getUsername(), usuario.getPassword(), usuario.getAuthorities());
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(usuario, usuario.getPassword(), usuario.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         } catch (TokenExpiredException | InvalidTokenException e) {
             log.info("Token inválido {}", e.getMessage());
@@ -62,6 +62,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     private boolean isPathIgnored(HttpServletRequest request) {
         return request.getServletPath().equals("/login")
                 || request.getServletPath().equals("/usuarios/cadastrar")
-                || request.getServletPath().startsWith("/swagger-ui");
+                || request.getServletPath().startsWith("/swagger-ui")
+                || request.getServletPath().startsWith("/h2-console");
     }
 }

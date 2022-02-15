@@ -2,8 +2,10 @@ package com.caiolima.bcontrol.controller;
 
 import com.caiolima.bcontrol.controller.dto.UsuarioRequest;
 import com.caiolima.bcontrol.controller.dto.UsuarioResponse;
+import com.caiolima.bcontrol.exception.UnauthorizedException;
 import com.caiolima.bcontrol.model.Usuario;
 import com.caiolima.bcontrol.service.UsuarioService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +13,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.security.Principal;
 
+@Tag(name = "Usuário", description = "Operações relacionadas a usuário")
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
@@ -33,15 +37,18 @@ public class UsuarioController {
         return ResponseEntity.created(uri).body(new UsuarioResponse(usuario));
     }
 
-    @PutMapping("/atualizar")
-    public ResponseEntity<UsuarioResponse> atualize(@RequestBody UsuarioRequest request) {
-        Usuario usuario = service.atualize(request.toModel());
+    @PutMapping
+    public ResponseEntity<UsuarioResponse> update(@RequestBody UsuarioRequest request, Principal principal) {
+        if (!request.username().equals(principal.getName())) {
+            throw new UnauthorizedException();
+        }
+        Usuario usuario = service.update(request.toModel());
         return ResponseEntity.ok(new UsuarioResponse(usuario));
     }
 
-    @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.delete(id);
+    @DeleteMapping
+    public ResponseEntity<Void> delete(Principal principal) {
+        service.delete(principal.getName());
         return ResponseEntity.noContent().build();
     }
 }
