@@ -1,11 +1,9 @@
 package com.caiolima.bcontrol.controller;
 
-import com.caiolima.bcontrol.controller.dto.ReceitaRequest;
-import com.caiolima.bcontrol.controller.dto.ReceitaResponse;
+import com.caiolima.bcontrol.controller.dto.request.ReceitaRequest;
+import com.caiolima.bcontrol.controller.dto.response.ReceitaResponse;
 import com.caiolima.bcontrol.model.Receita;
-import com.caiolima.bcontrol.model.Usuario;
 import com.caiolima.bcontrol.service.ReceitaService;
-import com.caiolima.bcontrol.service.UsuarioService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +20,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.security.Principal;
 import java.util.List;
 
 @Tag(name = "Receitas", description = "Operações relacionadas a receitas financeiras")
@@ -31,19 +28,15 @@ import java.util.List;
 public class ReceitaController {
 
     private final ReceitaService service;
-    private final UsuarioService usuarioService;
 
     @Autowired
-    public ReceitaController(ReceitaService receitaService, UsuarioService usuarioService) {
+    public ReceitaController(ReceitaService receitaService) {
         this.service = receitaService;
-        this.usuarioService = usuarioService;
     }
 
     @PostMapping
-    public ResponseEntity<ReceitaResponse> save(@RequestBody @Valid ReceitaRequest request, UriComponentsBuilder uriBuilder, Principal principal) {
+    public ResponseEntity<ReceitaResponse> save(@RequestBody @Valid ReceitaRequest request, UriComponentsBuilder uriBuilder) {
         Receita receita = request.toModel();
-        Usuario usuario = usuarioService.findByUsername(principal.getName());
-        receita.setUsuario(usuario);
         receita = service.save(receita);
 
         URI uri = uriBuilder.path("/receitas/{id}")
@@ -63,8 +56,8 @@ public class ReceitaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReceitaResponse> findById(@PathVariable Long id, Principal principal) {
-        Receita receita = service.findById(id, principal.getName());
+    public ResponseEntity<ReceitaResponse> findById(@PathVariable Long id) {
+        Receita receita = service.findById(id);
         return ResponseEntity.ok(new ReceitaResponse(receita));
     }
 
@@ -79,16 +72,16 @@ public class ReceitaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ReceitaResponse> put(@PathVariable Long id, @RequestBody ReceitaRequest request, Principal principal) {
+    public ResponseEntity<ReceitaResponse> put(@PathVariable Long id, @RequestBody ReceitaRequest request) {
         Receita receita = request.toModel();
         receita.setId(id);
-        receita = service.update(receita, principal.getName());
+        receita = service.update(receita);
         return ResponseEntity.ok(new ReceitaResponse(receita));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id, Principal principal) {
-        service.deleteById(id, principal.getName());
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -1,7 +1,7 @@
 package com.caiolima.bcontrol.service;
 
-import com.caiolima.bcontrol.controller.dto.GastoPorCategoria;
-import com.caiolima.bcontrol.controller.dto.ResumoDTO;
+import com.caiolima.bcontrol.controller.dto.response.GastoPorCategoria;
+import com.caiolima.bcontrol.controller.dto.response.ResumoDTO;
 import com.caiolima.bcontrol.model.CategoriaDespesa;
 import com.caiolima.bcontrol.model.Despesa;
 import com.caiolima.bcontrol.model.RegistroFinanceiro;

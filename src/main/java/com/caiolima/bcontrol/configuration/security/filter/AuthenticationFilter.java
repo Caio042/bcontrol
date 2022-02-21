@@ -1,11 +1,9 @@
 package com.caiolima.bcontrol.configuration.security.filter;
 
 import com.caiolima.bcontrol.configuration.security.JWTService;
-import com.caiolima.bcontrol.controller.dto.TokenDTO;
+import com.caiolima.bcontrol.controller.dto.response.TokenDTO;
 import com.caiolima.bcontrol.model.Usuario;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Slf4j
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 
@@ -31,14 +28,12 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         this.authenticationManager = authenticationManager;
     }
 
-    @SneakyThrows
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        log.info("Attempt authentication {}", username);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
         return authenticationManager.authenticate(token);
     }

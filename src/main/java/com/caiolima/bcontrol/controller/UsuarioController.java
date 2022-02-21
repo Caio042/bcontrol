@@ -1,7 +1,7 @@
 package com.caiolima.bcontrol.controller;
 
-import com.caiolima.bcontrol.controller.dto.UsuarioRequest;
-import com.caiolima.bcontrol.controller.dto.UsuarioResponse;
+import com.caiolima.bcontrol.controller.dto.request.UsuarioRequest;
+import com.caiolima.bcontrol.controller.dto.response.UsuarioResponse;
 import com.caiolima.bcontrol.exception.UnauthorizedException;
 import com.caiolima.bcontrol.model.Usuario;
 import com.caiolima.bcontrol.service.UsuarioService;

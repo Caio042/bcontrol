@@ -26,15 +26,21 @@ Para executar execute:
 
 ## ⌨ Uso
 
-### Consumo da api
-
 O projeto será executado em http://localhost:8080/ e será possível enviar requisições a API.
-Para acessar a documentação entre em http://localhost:8080/swagger-ui/
-Collection do Postman disponível em: [Massa de testes](./src/main/resources/Budget%20Control.postman_collection.json)
+Para acessar a documentação entre em /swagger-ui.html
+Collection do Postman disponível em: [Massa de testes](Budget%20Control.postman_collection.json)
 
-### Banco de dados
+### 🔑🔑🔒 Segurança
 
-A aplicação usa o banco de dados em memória H2, para acessar seu console entre em http://localhost:8080/h2-console/
+Os recursos da aplicação são protegidos. Para acessar é necessário cadastrar um usuário em /usuarios/cadastrar, 
+enviando um json contendo o username e a senha: {"username":"example","password":""example}.
+
+O login é feito em /login, enviando o username e a senha em form-data. 
+O token recebido é do tipo bearer, e deve ser inserido no header das requisições.
+
+### 💾💾💾💾💿 Banco de dados
+
+A aplicação usa o banco de dados em memória H2, para acessar seu console entre em /h2-console
 
 
 ## 🛠️ Construído com

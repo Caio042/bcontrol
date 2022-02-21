@@ -1,4 +1,4 @@
-package com.caiolima.bcontrol.controller.dto;
+package com.caiolima.bcontrol.controller.dto.request;
 
 import com.caiolima.bcontrol.model.CategoriaDespesa;
 import com.caiolima.bcontrol.model.Despesa;

@@ -2,7 +2,7 @@ package com.caiolima.bcontrol.configuration.security.filter;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.caiolima.bcontrol.configuration.security.JWTService;
-import com.caiolima.bcontrol.controller.dto.ResponseMessage;
+import com.caiolima.bcontrol.controller.dto.response.ResponseMessage;
 import com.caiolima.bcontrol.exception.InvalidTokenException;
 import com.caiolima.bcontrol.model.Usuario;
 import com.fasterxml.jackson.databind.ObjectMapper;

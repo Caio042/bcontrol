@@ -15,4 +15,8 @@ public class Receita extends RegistroFinanceiro {
     public Receita(String descricao, BigDecimal valor, LocalDate data) {
         super(descricao, valor, data);
     }
+
+    public Receita(String descricao, BigDecimal valor, LocalDate data, Usuario usuario) {
+        super(descricao, valor, data, usuario);
+    }
 }

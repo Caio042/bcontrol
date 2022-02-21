@@ -36,7 +36,7 @@ public abstract class RegistroFinanceiro {
     @Column(name = "DATA", nullable = false)
     private LocalDate data;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USUARIO_ID", nullable = false)
     private Usuario usuario;
 
@@ -45,5 +45,12 @@ public abstract class RegistroFinanceiro {
         this.descricao = descricao;
         this.valor = valor;
         this.data = data;
+    }
+
+    protected RegistroFinanceiro(String descricao, BigDecimal valor, LocalDate data, Usuario usuario) {
+        this.descricao = descricao;
+        this.valor = valor;
+        this.data = data;
+        this.usuario = usuario;
     }
 }

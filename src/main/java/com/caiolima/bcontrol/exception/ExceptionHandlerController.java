@@ -1,6 +1,6 @@
 package com.caiolima.bcontrol.exception;
 
-import com.caiolima.bcontrol.controller.dto.ResponseMessage;
+import com.caiolima.bcontrol.controller.dto.response.ResponseMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

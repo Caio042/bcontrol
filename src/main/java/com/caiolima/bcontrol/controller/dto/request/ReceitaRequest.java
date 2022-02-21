@@ -1,4 +1,4 @@
-package com.caiolima.bcontrol.controller.dto;
+package com.caiolima.bcontrol.controller.dto.request;
 
 import com.caiolima.bcontrol.model.Receita;
 import io.swagger.v3.oas.annotations.media.Schema;

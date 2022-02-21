@@ -1,5 +1,6 @@
 package com.caiolima.bcontrol.model;
 
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
@@ -13,7 +14,12 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "DESPESA")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Despesa extends RegistroFinanceiro {
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, name = "CATEGORIA")
+    private CategoriaDespesa categoria;
 
     public Despesa(Long id,
                    String descricao,
@@ -33,9 +39,10 @@ public class Despesa extends RegistroFinanceiro {
         this.categoria = categoria;
     }
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, name = "CATEGORIA")
-    private CategoriaDespesa categoria;
+    public Despesa(String descricao, BigDecimal valor, LocalDate data, CategoriaDespesa categoria, Usuario usuario) {
+        super(descricao, valor, data, usuario);
+        this.categoria = categoria;
+    }
 
     public CategoriaDespesa getCategoria() {
         return categoria;

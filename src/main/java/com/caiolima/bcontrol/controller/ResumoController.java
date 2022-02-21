@@ -1,6 +1,6 @@
 package com.caiolima.bcontrol.controller;
 
-import com.caiolima.bcontrol.controller.dto.ResumoDTO;
+import com.caiolima.bcontrol.controller.dto.response.ResumoDTO;
 import com.caiolima.bcontrol.service.ResumoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

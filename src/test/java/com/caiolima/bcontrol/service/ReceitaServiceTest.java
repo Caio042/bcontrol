@@ -9,11 +9,13 @@ import org.assertj.core.api.Assertions;
 import org.assertj.core.api.WithAssertions;
 import org.assertj.core.description.Description;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
@@ -27,6 +29,8 @@ import static org.mockito.Mockito.*;
 class ReceitaServiceTest implements WithAssertions {
 
     @Mock
+    private UsuarioService usuarioService;
+    @Mock
     private ReceitaRepository repository;
     @InjectMocks
     private ReceitaService service;
@@ -39,13 +43,20 @@ class ReceitaServiceTest implements WithAssertions {
         Assertions.setDescriptionConsumer(descriptionConsumer);
     }
 
+    @BeforeEach
+    void mockUser() {
+        when(usuarioService.currentPrincipal()).thenReturn("caio");
+
+    }
+
+
     @Test
     @DisplayName("findById - Deve retornar Receita por id, caso exista")
     void deveRetornarReceitaPorId() {
         Receita receita = receitaSalario(1L);
         when(repository.findById(1L)).thenReturn(Optional.of(receita));
 
-        assertThat(service.findById(1L, null))
+        assertThat(service.findById(1L))
                 .as("Não deve ser nulo")
                 .isNotNull()
                 .as("Não deve conter campos nulos")
@@ -56,7 +67,7 @@ class ReceitaServiceTest implements WithAssertions {
 
         assertThatNoException()
                 .as("Não deve disparar exception")
-                .isThrownBy(() -> service.findById(1L, null));
+                .isThrownBy(() -> service.findById(1L));
 
         verify(repository, times(2)).findById(1L);
     }
@@ -69,7 +80,7 @@ class ReceitaServiceTest implements WithAssertions {
 
         assertThatExceptionOfType(NotFoundException.class)
                 .as("Deve disparar exceção caso repository não encontre receita com id")
-                .isThrownBy(() -> service.findById(99L, null))
+                .isThrownBy(() -> service.findById(99L))
                 .as("Deve ter a mensagem certa")
                 .withMessage("Registro não encontrado");
 
@@ -79,10 +90,12 @@ class ReceitaServiceTest implements WithAssertions {
     @Test
     @DisplayName("save - Deve salvar")
     void deveSalvar() {
+        Mockito.reset(usuarioService);
         Receita receita = receitaSalario();
         Receita receitaSalva = receitaSalario(1L);
+        when(usuarioService.findByUsername()).thenReturn(usuario(1L));
         when(repository.save(receita)).thenReturn(receitaSalva);
-        when(repository.isDuplicate(any(), any(), any(), any())).thenReturn(false);
+        when(repository.isDuplicate(any(), any(), any(), any(), any())).thenReturn(false);
 
         assertThat(service.save(receita))
                 .as("Não deve ser nulo")
@@ -97,13 +110,16 @@ class ReceitaServiceTest implements WithAssertions {
                 .isEqualTo(receita);
 
         verify(repository, times(1)).save(receita);
-        verify(repository, times(1)).isDuplicate(any(),any(), any(), any());
+        verify(repository, times(1)).isDuplicate(any(),any(), any(), any(), any());
     }
 
     @Test
     @DisplayName("save - Não deve salvar, caso seja duplicado")
     void testaReceitaDuplicada() {
-        when(repository.isDuplicate(any(), any(), any(), any())).thenReturn(true);
+        Mockito.reset(usuarioService);
+
+        when(repository.isDuplicate(any(), any(), any(), any(), any())).thenReturn(true);
+        when(usuarioService.findByUsername()).thenReturn(usuario(1L));
 
         Receita receita = receitaSalario();
 
@@ -113,57 +129,54 @@ class ReceitaServiceTest implements WithAssertions {
                 .as("Com a mensagem certa")
                 .withMessage("Registro já feito no mesmo mês, com a mesma descrição");
 
-        verify(repository, times(1)).isDuplicate(any(),any(), any(), any());
+        verify(repository, times(1)).isDuplicate(any(),any(), any(), any(), any());
         verify(repository, times(0)).save(any());
     }
 
     @Test
     @DisplayName("update - não deve atualizar, se não existir registro")
     void testaAtualizacaoEmRegistroInexistente() {
-        when(repository.existsById(99L)).thenReturn(false);
+        when(repository.findById(99L)).thenReturn(Optional.empty());
         Receita receita = receitaSalario(99L);
 
         assertThatExceptionOfType(NotFoundException.class)
                 .as("Deve disparar exceção caso repository não encontre receita com id")
-                .isThrownBy(() -> service.update(receita, null))
+                .isThrownBy(() -> service.update(receita))
                 .as("Com a mensagem certa")
                 .withMessage("Registro não encontrado");
 
         verify(repository, times(0)).save(any());
-        verify(repository, times(1)).existsById(99L);
     }
 
     @Test
     @DisplayName("update - não deve atualizar, se estiver duplicado")
     void testaAtualizacaoEmRegistroDuplicado() {
-        when(repository.isDuplicate(any(), any(), any(), any())).thenReturn(true);
-        when(repository.existsById(1L)).thenReturn(true);
+        when(repository.isDuplicate(any(), any(), any(), any(), any())).thenReturn(true);
 
         Receita receita = receitaSalario(1L);
 
         assertThatExceptionOfType(RegistroDuplicadoException.class)
                 .as("Deve disparar exceção caso registro esteja duplicado")
-                .isThrownBy(() -> service.update(receita, null))
+                .isThrownBy(() -> service.update(receita))
                 .as("Com a mensagem certa")
                 .withMessage("Registro já feito no mesmo mês, com a mesma descrição");
 
         verify(repository, times(0)).save(any());
-        verify(repository, times(1)).isDuplicate(any(),any(), any(), any());
+        verify(repository, times(1)).isDuplicate(any(),any(), any(), any(), any());
 
     }
 
     @Test
     @DisplayName("delete - deve disparar Exception, caso registro não exista")
     void testaExclusaoDeRegistroInexistente() {
-        when(repository.existsById(99L)).thenReturn(false);
+        when(repository.findById(99L)).thenReturn(Optional.empty());
 
         assertThatExceptionOfType(NotFoundException.class)
                 .as("Deveria disparar exception")
-                .isThrownBy(() -> service.deleteById(99L, null))
+                .isThrownBy(() -> service.deleteById(99L))
                 .as("Com a mensagem certa")
                 .withMessage("Registro não encontrado");
 
-        verify(repository, times(1)).existsById(99L);
         verify(repository, times(0)).deleteById(99L);
     }
 }

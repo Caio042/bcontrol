@@ -1,4 +1,4 @@
-package com.caiolima.bcontrol.controller.dto;
+package com.caiolima.bcontrol.controller.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
