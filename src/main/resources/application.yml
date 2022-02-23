@@ -1,21 +1,10 @@
 spring:
   datasource:
-    driverClassName: org.h2.Driver
-    url: jdbc:h2:mem:bcontrol #jdbc:h2:file:/data/demo
-    username: sa
-    password:
+    driverClassName: org.postgresql.Driver
 
   jpa:
-    database: H2
-    hibernate:
-      ddl-auto: create-drop
-    database-platform: org.hibernate.dialect.H2Dialect
+    ddl-auto: update
     show-sql: true
-    #defer-datasource-initialization: true
-
-  h2:
-    console:
-      enabled: true
 
   jackson:
     mapper:
@@ -30,7 +19,7 @@ info:
     version: '@project.version@'
 
 jwt:
-  secret: segredo
+  secret: ${JWT_SECRET}
   expiration:
     access: 3600000 #uma hora
     refresh: 43200000 #doze horas
