@@ -3,7 +3,7 @@ spring:
     driverClassName: org.postgresql.Driver
 
   jpa:
-    ddl-auto: update
+    generate-ddl: true
     show-sql: true
 
   jackson:
