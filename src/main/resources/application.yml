@@ -1,21 +1,10 @@
 spring:
   datasource:
-    driverClassName: org.h2.Driver
-    url: jdbc:h2:mem:bcontrol #jdbc:h2:file:/data/demo
-    username: sa
-    password:
+    driverClassName: org.postgresql.Driver
 
   jpa:
-    database: H2
-    hibernate:
-      ddl-auto: create-drop
-    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
     show-sql: true
-    #defer-datasource-initialization: true
-
-  h2:
-    console:
-      enabled: true
 
   jackson:
     mapper:
@@ -23,6 +12,7 @@ spring:
 
 springdoc:
   default-produces-media-type: application/json
+  show-login-endpoint: true
 
 info:
   app:
