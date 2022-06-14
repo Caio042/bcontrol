@@ -1,5 +1,4 @@
 package com.caiolima.bcontrol.controller.dto.response;
-
 import com.caiolima.bcontrol.model.Receita;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -24,12 +23,14 @@ public record ReceitaResponse(
         @Schema(title = "Data da receita",
                 description = "Data em que foi realizado a receita, no padrão yyyy-MM-dd",
                 example = "2022-02-15")
-        LocalDate data) {
+        LocalDate data,
+        CategoriaResponse categoria) {
 
     public ReceitaResponse(Receita receita) {
         this(receita.getId(),
                 receita.getDescricao(),
                 receita.getValor(),
-                receita.getData());
+                receita.getData(),
+                new CategoriaResponse(receita.getCategoria()));
     }
 }

@@ -1,4 +1,4 @@
-package com.caiolima.bcontrol.service;
+/*package com.caiolima.bcontrol.service;
 
 import com.caiolima.bcontrol.exception.NotFoundException;
 import com.caiolima.bcontrol.exception.RegistroDuplicadoException;
@@ -128,3 +128,5 @@ class DespesaServiceTest implements WithAssertions {
         verify(repository, times(0)).deleteById(99L);
     }
 }
+
+ */

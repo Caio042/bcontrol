@@ -1,6 +1,6 @@
 package com.caiolima.bcontrol.controller.dto.request;
 
-import com.caiolima.bcontrol.model.CategoriaDespesa;
+import com.caiolima.bcontrol.model.Categoria;
 import com.caiolima.bcontrol.model.Despesa;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -31,16 +31,15 @@ public record DespesaRequest(
         @NotNull
         LocalDate data,
         @Schema(nullable = true,
-                title = "Categoria da despesa",
-                description = "Categoria da despesa, se não for informado será alocada em OUTRAS",
-                example = "MORADIA",
-                defaultValue = "OUTRAS")
-        CategoriaDespesa categoria) {
+                title = "Id da categoria",
+                description = "Categoria da despesa",
+                example = "1")
+        Long categoriaId) {
 
     public Despesa toModel() {
         return new Despesa(descricao(),
                 valor(),
                 data(),
-                categoria() != null ? categoria() : CategoriaDespesa.OUTRAS);
+                new Categoria(categoriaId()));
     }
 }

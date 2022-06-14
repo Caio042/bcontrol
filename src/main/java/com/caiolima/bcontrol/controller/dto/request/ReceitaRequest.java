@@ -1,5 +1,6 @@
 package com.caiolima.bcontrol.controller.dto.request;
 
+import com.caiolima.bcontrol.model.Categoria;
 import com.caiolima.bcontrol.model.Receita;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -28,8 +29,9 @@ public record ReceitaRequest(
                 description = "Data em que foi realizado a receita, no padrão yyyy-MM-dd",
                 example = "2022-02-15")
         @NotNull
-        LocalDate data) {
+        LocalDate data,
+        Long categoriaId) {
     public Receita toModel() {
-        return new Receita(descricao(), valor(), data());
+        return new Receita(descricao(), valor(), data(), new Categoria(categoriaId()));
     }
 }

@@ -40,17 +40,16 @@ public abstract class RegistroFinanceiro {
     @JoinColumn(name = "USUARIO_ID", nullable = false)
     private Usuario usuario;
 
-    protected RegistroFinanceiro(Long id, @NonNull String descricao, @NonNull BigDecimal valor, @NonNull LocalDate data) {
-        this.id = id;
-        this.descricao = descricao;
-        this.valor = valor;
-        this.data = data;
-    }
+    @NonNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CATEGORIA_ID", nullable = false)
+    private Categoria categoria;
 
-    protected RegistroFinanceiro(String descricao, BigDecimal valor, LocalDate data, Usuario usuario) {
+    protected RegistroFinanceiro(String descricao, BigDecimal valor, LocalDate data, Usuario usuario, Categoria categoria) {
         this.descricao = descricao;
         this.valor = valor;
         this.data = data;
         this.usuario = usuario;
+        this.categoria = categoria;
     }
 }

@@ -1,4 +1,4 @@
-package com.caiolima.bcontrol.repository;
+/*package com.caiolima.bcontrol.repository;
 
 import com.caiolima.bcontrol.model.RegistroFinanceiro;
 import org.assertj.core.api.WithAssertions;
@@ -63,3 +63,4 @@ class ReceitaRepositoryTest implements WithAssertions {
                 .doesNotContain(LocalDate.of(2022, Month.MARCH, 5));
     }
 }
+*/

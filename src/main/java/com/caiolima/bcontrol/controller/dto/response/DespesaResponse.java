@@ -1,6 +1,5 @@
 package com.caiolima.bcontrol.controller.dto.response;
 
-import com.caiolima.bcontrol.model.CategoriaDespesa;
 import com.caiolima.bcontrol.model.Despesa;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -30,9 +29,9 @@ public record DespesaResponse(
                 description = "Categoria da despesa",
                 example = "MORADIA",
                 defaultValue = "OUTRAS")
-        CategoriaDespesa categoria) {
+        CategoriaResponse categoria) {
 
     public DespesaResponse(Despesa despesa) {
-        this(despesa.getId(), despesa.getDescricao(), despesa.getValor(), despesa.getData(), despesa.getCategoria());
+        this(despesa.getId(), despesa.getDescricao(), despesa.getValor(), despesa.getData(), new CategoriaResponse(despesa.getCategoria()));
     }
 }

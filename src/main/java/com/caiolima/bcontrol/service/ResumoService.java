@@ -1,8 +1,9 @@
 package com.caiolima.bcontrol.service;
 
-import com.caiolima.bcontrol.controller.dto.response.GastoPorCategoria;
+import com.caiolima.bcontrol.controller.dto.response.CategoriaResponse;
+import com.caiolima.bcontrol.controller.dto.response.ValoresPorCategoria;
 import com.caiolima.bcontrol.controller.dto.response.ResumoDTO;
-import com.caiolima.bcontrol.model.CategoriaDespesa;
+import com.caiolima.bcontrol.model.Categoria;
 import com.caiolima.bcontrol.model.Despesa;
 import com.caiolima.bcontrol.model.RegistroFinanceiro;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +41,13 @@ public class ResumoService {
 
         BigDecimal receitaMes = receitaService.getValorNoMes(ano, mes);
         BigDecimal saldoMes = receitaMes.subtract(despesaMes);
-        List<GastoPorCategoria> gastosPorCategoria = groupByCategoria(despesas);
+        List<ValoresPorCategoria> gastosPorCategoria = groupByCategoria(despesas);
 
         return new ResumoDTO(receitaMes, despesaMes, saldoMes, gastosPorCategoria);
     }
 
-    private List<GastoPorCategoria> groupByCategoria(List<Despesa> despesas) {
-        Map<CategoriaDespesa, BigDecimal> valoresPorCategoriaMap = despesas
+    private List<ValoresPorCategoria> groupByCategoria(List<Despesa> despesas) {
+        Map<Categoria, BigDecimal> valoresPorCategoriaMap = despesas
                 .stream()
                 .collect(Collectors
                         .groupingBy(Despesa::getCategoria,
@@ -56,7 +57,7 @@ public class ResumoService {
                 .entrySet()
                 .stream()
                 .map(valorPorCategoria ->
-                        new GastoPorCategoria(valorPorCategoria.getKey(),
+                        new ValoresPorCategoria(new CategoriaResponse(valorPorCategoria.getKey()),
                         valorPorCategoria.getValue()))
                 .toList();
     }
