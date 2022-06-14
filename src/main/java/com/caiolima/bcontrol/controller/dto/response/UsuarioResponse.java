@@ -10,8 +10,9 @@ public record UsuarioResponse(
                 example = "52")
         Long id,
         @Schema(title = "Username")
-        String username) {
+        String username,
+        String nome) {
     public UsuarioResponse(Usuario usuario) {
-        this(usuario.getId(), usuario.getUsername());
+        this(usuario.getId(), usuario.getEmail(), usuario.getNome());
     }
 }

@@ -24,18 +24,23 @@ public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "USERNAME", nullable = false, unique = true)
-    private String username;
+
+    @Column(name = "NOME", nullable = false)
+    private String nome;
+
+    @Column(name = "EMAIL", nullable = false, unique = true)
+    private String email;
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
-    public Usuario(String username, String password) {
-        this.username = username;
+    public Usuario(String email, String password, String nome) {
+        this.email = email;
         this.password = password;
+        this.nome = nome;
     }
 
-    public Usuario(String username) {
-        this.username = username;
+    public Usuario(String email) {
+        this.email = email;
     }
 
     @Override
@@ -50,7 +55,11 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return getEmail();
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Override
@@ -83,5 +92,9 @@ public class Usuario implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getNome() {
+        return this.nome;
     }
 }

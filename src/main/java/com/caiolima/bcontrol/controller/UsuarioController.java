@@ -39,7 +39,7 @@ public class UsuarioController {
 
     @PutMapping
     public ResponseEntity<UsuarioResponse> update(@RequestBody UsuarioRequest request, Principal principal) {
-        if (!request.username().equals(principal.getName())) {
+        if (!request.email().equals(principal.getName())) {
             throw new UnauthorizedException();
         }
         Usuario usuario = service.update(request.toModel());
