@@ -11,8 +11,8 @@ import java.util.List;
 
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
-    @Query("select c from Categoria c where c.tipo = :tipo and c.usuario.username = :username")
-    List<Categoria> findAllByTipo(@Param("tipo") Tipo tipo, @Param("username") String username);
+    @Query("select c from Categoria c where c.tipo = :tipo and c.usuario.email = :email")
+    List<Categoria> findAllByTipo(@Param("tipo") Tipo tipo, @Param("email") String email);
 
-    void deleteByUsuario_Username(String username);
+    void deleteByUsuario_Email(String email);
 }

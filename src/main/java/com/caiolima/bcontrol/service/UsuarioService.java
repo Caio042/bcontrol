@@ -36,7 +36,7 @@ public class UsuarioService implements UserDetailsService {
 
     @Transactional
     public Usuario save(Usuario usuario) {
-        if (repository.existsByUsername(usuario.getUsername())) {
+        if (repository.existsByEmail(usuario.getUsername())) {
             throw new DuplicateUsernameException();
         }
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
@@ -44,12 +44,12 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public Usuario findByUsername(String userName) {
-        return repository.findByUsername(userName)
+        return repository.findByEmail(userName)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não existe"));
     }
 
     public Usuario findByUsername() {
-        return repository.findByUsername(currentPrincipal())
+        return repository.findByEmail(currentPrincipal())
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não existe"));
     }
 
@@ -68,10 +68,10 @@ public class UsuarioService implements UserDetailsService {
 
     @Transactional
     public void delete(String username) {
-        categoriaRepository.deleteByUsuario_Username(username);
-        receitaRepository.deleteByUsuario_Username(username);
-        despesaRepository.deleteByUsuario_Username(username);
-        repository.deleteByUsername(username);
+        categoriaRepository.deleteByUsuario_Email(username);
+        receitaRepository.deleteByUsuario_Email(username);
+        despesaRepository.deleteByUsuario_Email(username);
+        repository.deleteByEmail(username);
     }
 
     public Usuario currentUser() {

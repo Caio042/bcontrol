@@ -14,17 +14,17 @@ import java.util.Optional;
 @Repository
 public interface ReceitaRepository extends JpaRepository<Receita, Long> {
 
-    @Query(value = "select (count(r) > 0) from Receita r where r.descricao = :descricao and r.data between :dataStart and :dataEnd and (:idToIgnore is null or r.id <> :idToIgnore) AND r.usuario.username = :username")
-    boolean isDuplicate(@Param("descricao") String descricao, @Param("dataStart") LocalDate dataStart, @Param("dataEnd") LocalDate dataEnd, @Param("idToIgnore") Long idToIgnore, @Param("username") String username);
+    @Query(value = "select (count(r) > 0) from Receita r where r.descricao = :descricao and r.data between :dataStart and :dataEnd and (:idToIgnore is null or r.id <> :idToIgnore) AND r.usuario.email = :email")
+    boolean isDuplicate(@Param("descricao") String descricao, @Param("dataStart") LocalDate dataStart, @Param("dataEnd") LocalDate dataEnd, @Param("idToIgnore") Long idToIgnore, @Param("email") String email);
 
-    @Query(value = "SELECT r FROM Receita r WHERE (:descricao IS NULL OR r.descricao LIKE %:descricao%) AND r.usuario.username = :username")
-    List<Receita> findAllByDescricao(@Param("descricao") String descricao, @Param("username") String username);
+    @Query(value = "SELECT r FROM Receita r WHERE (:descricao IS NULL OR r.descricao LIKE %:descricao%) AND r.usuario.email = :email")
+    List<Receita> findAllByDescricao(@Param("descricao") String descricao, @Param("email") String email);
 
-    @Query(value = "SELECT r from Receita r WHERE YEAR(r.data) = :ano AND MONTH(r.data) = :mes AND r.usuario.username = :username")
-    List<Receita> findAllByDate(@Param("ano") Integer ano, @Param("mes") Integer mes, @Param("username") String username);
+    @Query(value = "SELECT r from Receita r WHERE YEAR(r.data) = :ano AND MONTH(r.data) = :mes AND r.usuario.email = :email")
+    List<Receita> findAllByDate(@Param("ano") Integer ano, @Param("mes") Integer mes, @Param("email") String email);
 
-    @Query(value = "SELECT SUM (r.valor) FROM Receita r WHERE YEAR(r.data) = :ano AND MONTH(r.data) = :mes AND r.usuario.username = :username")
-    Optional<BigDecimal> getValorNoMes(@Param("ano")Integer ano, @Param("mes") Integer mes, @Param("username") String username);
+    @Query(value = "SELECT SUM (r.valor) FROM Receita r WHERE YEAR(r.data) = :ano AND MONTH(r.data) = :mes AND r.usuario.email = :email")
+    Optional<BigDecimal> getValorNoMes(@Param("ano")Integer ano, @Param("mes") Integer mes, @Param("email") String email);
 
-    void deleteByUsuario_Username(String username);
+    void deleteByUsuario_Email(String email);
 }
