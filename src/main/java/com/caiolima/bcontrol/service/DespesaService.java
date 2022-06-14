@@ -3,6 +3,7 @@ package com.caiolima.bcontrol.service;
 import com.caiolima.bcontrol.exception.NotFoundException;
 import com.caiolima.bcontrol.exception.RegistroDuplicadoException;
 import com.caiolima.bcontrol.exception.UnauthorizedException;
+import com.caiolima.bcontrol.model.Categoria;
 import com.caiolima.bcontrol.model.Despesa;
 import com.caiolima.bcontrol.model.Usuario;
 import com.caiolima.bcontrol.repository.DespesaRepository;
@@ -20,16 +21,20 @@ public class DespesaService {
 
     private final DespesaRepository repository;
     private final UsuarioService usuarioService;
+    private final CategoriaService categoriaService;
 
     @Autowired
-    public DespesaService(DespesaRepository repository, UsuarioService usuarioService) {
+    public DespesaService(DespesaRepository repository, UsuarioService usuarioService, CategoriaService categoriaService) {
         this.repository = repository;
         this.usuarioService = usuarioService;
+        this.categoriaService = categoriaService;
     }
 
     @Transactional
     public Despesa save(Despesa despesa) {
         Usuario usuario = usuarioService.findByUsername();
+        Categoria categoria = categoriaService.findById(despesa.getCategoria().getId());
+        despesa.setCategoria(categoria);
         despesa.setUsuario(usuario);
         if(isDuplicateInMonth(despesa, usuario.getUsername())) {
             throw new RegistroDuplicadoException();
@@ -56,6 +61,8 @@ public class DespesaService {
             throw new RegistroDuplicadoException();
         }
         Despesa despesaDB = findById(despesa.getId());
+        Categoria categoria = categoriaService.findById(despesa.getCategoria().getId());
+        despesa.setCategoria(categoria);
         despesa.setUsuario(despesaDB.getUsuario());
         return repository.save(despesa);
     }

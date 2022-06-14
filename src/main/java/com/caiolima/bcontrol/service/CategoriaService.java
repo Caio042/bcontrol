@@ -24,7 +24,7 @@ public class CategoriaService {
 
     @Transactional
     public Categoria save(Categoria categoria) {
-        Usuario usuario = usuarioService.currentUser();
+        Usuario usuario = usuarioService.findByUsername();
         categoria.setUsuario(usuario);
         return repository.save(categoria);
     }
@@ -41,7 +41,7 @@ public class CategoriaService {
         return repository.save(categoria);
     }
 
-    private Categoria findById(Long id) {
+    public Categoria findById(Long id) {
         Categoria categoria = repository.findById(id).orElseThrow(NotFoundException::new);
 
         if (!categoria.getUsuario().getUsername().equals(usuarioService.currentPrincipal())) {

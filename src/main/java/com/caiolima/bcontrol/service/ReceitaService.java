@@ -3,6 +3,7 @@ package com.caiolima.bcontrol.service;
 import com.caiolima.bcontrol.exception.NotFoundException;
 import com.caiolima.bcontrol.exception.RegistroDuplicadoException;
 import com.caiolima.bcontrol.exception.UnauthorizedException;
+import com.caiolima.bcontrol.model.Categoria;
 import com.caiolima.bcontrol.model.Receita;
 import com.caiolima.bcontrol.model.Usuario;
 import com.caiolima.bcontrol.repository.ReceitaRepository;
@@ -20,16 +21,20 @@ public class ReceitaService {
 
     private final ReceitaRepository repository;
     private final UsuarioService usuarioService;
+    private final CategoriaService categoriaService;
 
     @Autowired
-    public ReceitaService(ReceitaRepository repository, UsuarioService usuarioService) {
+    public ReceitaService(ReceitaRepository repository, UsuarioService usuarioService, CategoriaService categoriaService) {
         this.repository = repository;
         this.usuarioService = usuarioService;
+        this.categoriaService = categoriaService;
     }
 
     @Transactional
     public Receita save(Receita receita) {
         Usuario usuario = usuarioService.findByUsername();
+        Categoria categoria = categoriaService.findById(receita.getCategoria().getId());
+        receita.setCategoria(categoria);
         receita.setUsuario(usuario);
         if (isDuplicateInMonth(receita, usuario.getUsername())) {
             throw new RegistroDuplicadoException();
@@ -60,6 +65,8 @@ public class ReceitaService {
             throw new RegistroDuplicadoException();
         }
         Receita receitaDB = findById(receita.getId());
+        Categoria categoria = categoriaService.findById(receita.getCategoria().getId());
+        receita.setCategoria(categoria);
         receita.setUsuario(receitaDB.getUsuario());
         return repository.save(receita);
     }

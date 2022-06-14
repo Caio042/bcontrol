@@ -2,6 +2,7 @@ package com.caiolima.bcontrol.service;
 
 import com.caiolima.bcontrol.exception.DuplicateUsernameException;
 import com.caiolima.bcontrol.model.Usuario;
+import com.caiolima.bcontrol.repository.CategoriaRepository;
 import com.caiolima.bcontrol.repository.DespesaRepository;
 import com.caiolima.bcontrol.repository.ReceitaRepository;
 import com.caiolima.bcontrol.repository.UsuarioRepository;
@@ -22,13 +23,15 @@ public class UsuarioService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final ReceitaRepository receitaRepository;
     private final DespesaRepository despesaRepository;
+    private final CategoriaRepository categoriaRepository;
 
     @Autowired
-    public UsuarioService(UsuarioRepository repository, PasswordEncoder passwordEncoder, ReceitaRepository receitaRepository, DespesaRepository despesaRepository) {
+    public UsuarioService(UsuarioRepository repository, PasswordEncoder passwordEncoder, ReceitaRepository receitaRepository, DespesaRepository despesaRepository, CategoriaRepository categoriaRepository) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.receitaRepository = receitaRepository;
         this.despesaRepository = despesaRepository;
+        this.categoriaRepository = categoriaRepository;
     }
 
     @Transactional
@@ -65,6 +68,7 @@ public class UsuarioService implements UserDetailsService {
 
     @Transactional
     public void delete(String username) {
+        categoriaRepository.deleteByUsuario_Username(username);
         receitaRepository.deleteByUsuario_Username(username);
         despesaRepository.deleteByUsuario_Username(username);
         repository.deleteByUsername(username);
