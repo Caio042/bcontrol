@@ -23,8 +23,3 @@ jwt:
   expiration:
     access: 86400000 #um dia
     refresh: 43200000 #doze horas
-
-server:
-  error:
-    include-message: always
-    include-binding-errors: always
