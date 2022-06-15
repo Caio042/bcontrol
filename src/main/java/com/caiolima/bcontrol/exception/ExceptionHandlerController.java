@@ -3,6 +3,7 @@ package com.caiolima.bcontrol.exception;
 import com.caiolima.bcontrol.controller.dto.response.ResponseMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,5 +46,12 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     @ResponseBody
     public ResponseEntity<ResponseMessage> duplicateUsernameHandler(DuplicateUsernameException exception) {
         return new ResponseEntity<>(new ResponseMessage(HttpStatus.UNPROCESSABLE_ENTITY.value(), exception.getMessage()), HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ResponseEntity<ResponseMessage> validationHandler(MissingServletRequestParameterException exception) {
+        return new ResponseEntity<>(new ResponseMessage(HttpStatus.BAD_REQUEST.value(), exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }
