@@ -2,6 +2,7 @@ package com.caiolima.bcontrol.controller.dto.request;
 
 import com.caiolima.bcontrol.model.Categoria;
 import com.caiolima.bcontrol.model.Receita;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.Min;
@@ -26,8 +27,9 @@ public record ReceitaRequest(
         @Min(0)
         BigDecimal valor,
         @Schema(title = "Data da receita",
-                description = "Data em que foi realizado a receita, no padrão yyyy-MM-dd",
-                example = "2022-02-15")
+                description = "Data em que foi realizado a receita",
+                example = "15/02/2022")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
         @NotNull
         LocalDate data,
         Long categoriaId) {

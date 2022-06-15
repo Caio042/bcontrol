@@ -1,6 +1,7 @@
 package com.caiolima.bcontrol.controller.dto.response;
 
 import com.caiolima.bcontrol.model.Despesa;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.math.BigDecimal;
@@ -22,8 +23,9 @@ public record DespesaResponse(
                 example = "950.25")
         BigDecimal valor,
         @Schema(title = "Data da despesa",
-                description = "Data em que foi realizado a despesa, no padrão yyyy-MM-dd",
-                example = "2022-02-15")
+                description = "Data em que foi realizado a despesa",
+                example = "15/02/2022")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
         LocalDate data,
         @Schema(title = "Categoria da despesa",
                 description = "Categoria da despesa",
