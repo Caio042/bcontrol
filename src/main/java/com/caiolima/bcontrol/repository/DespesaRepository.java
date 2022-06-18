@@ -22,4 +22,5 @@ public interface DespesaRepository extends JpaRepository<Despesa, Long> {
     List<Despesa> findAllByDate(@Param("ano") Integer ano, @Param("mes") Integer mes, @Param("email") String email);
 
     void deleteByUsuario_Email(String email);
+    void deleteByCategoria_id(Long categoriaId);
 }

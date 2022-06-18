@@ -57,7 +57,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                                               HttpServletResponse response,
                                               AuthenticationException failed) throws IOException, ServletException {
 
+        response.setStatus(401);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        new ObjectMapper().writeValue(response.getOutputStream(), new ResponseMessage(403, "Email e/ou senha incorretos"));
+        new ObjectMapper().writeValue(response.getOutputStream(), new ResponseMessage(401, "Email e/ou senha incorretos"));
     }
 }

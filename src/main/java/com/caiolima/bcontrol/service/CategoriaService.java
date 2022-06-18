@@ -6,6 +6,8 @@ import com.caiolima.bcontrol.model.Categoria;
 import com.caiolima.bcontrol.model.Tipo;
 import com.caiolima.bcontrol.model.Usuario;
 import com.caiolima.bcontrol.repository.CategoriaRepository;
+import com.caiolima.bcontrol.repository.DespesaRepository;
+import com.caiolima.bcontrol.repository.ReceitaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,10 +18,14 @@ public class CategoriaService {
 
     private final CategoriaRepository repository;
     private final UsuarioService usuarioService;
+    private final DespesaRepository despesaRepository;
+    private final ReceitaRepository receitaRepository;
 
-    public CategoriaService(CategoriaRepository repository, UsuarioService usuarioService) {
+    public CategoriaService(CategoriaRepository repository, UsuarioService usuarioService, DespesaRepository despesaRepository, ReceitaRepository receitaRepository) {
         this.repository = repository;
         this.usuarioService = usuarioService;
+        this.despesaRepository = despesaRepository;
+        this.receitaRepository = receitaRepository;
     }
 
     @Transactional
@@ -53,6 +59,8 @@ public class CategoriaService {
     @Transactional
     public void deleteById(Long id) {
         Categoria categoria = findById(id);
+        receitaRepository.deleteByCategoria_id(id);
+        despesaRepository.deleteByCategoria_id(id);
         repository.delete(categoria);
     }
 }
