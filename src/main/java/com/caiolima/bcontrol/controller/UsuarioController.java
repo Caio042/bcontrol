@@ -14,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.security.Principal;
+import java.util.List;
 
 @Tag(name = "Usuário", description = "Operações relacionadas a usuário")
 @RestController
@@ -50,5 +51,11 @@ public class UsuarioController {
     public ResponseEntity<Void> delete(Principal principal) {
         service.delete(principal.getName());
         return ResponseEntity.noContent().build();
+    }
+
+
+    @GetMapping("/anos-movimentados")
+    public ResponseEntity<List<Integer>> getAvailableYear() {
+        return ResponseEntity.ok(service.getYearAvailable());
     }
 }

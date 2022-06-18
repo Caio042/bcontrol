@@ -91,4 +91,9 @@ public class UsuarioService implements UserDetailsService {
     public String currentPrincipal() {
         return currentUser().getUsername();
     }
+
+
+    public List<Integer> getYearAvailable() {
+        return repository.getYears(currentPrincipal());
+    }
 }
