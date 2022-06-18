@@ -15,11 +15,12 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     void deleteByEmail(String email);
 
-    @Query(value = "SELECT DISTINCT YEAR(r.data)" +
+    @Query(value = "SELECT " +
+            "new java.lang.Integer(DISTINCT YEAR(r.data))" +
             "FROM Receita r " +
             "WHERE r.usuario.email = :email" +
             "UNION" +
-            "SELECT YEAR(d.data)" +
+            "SELECT new java.lang.Integer(YEAR(d.data))" +
             "FROM Despesa d" +
             "WHERE  d.usuario.email")
     List<Integer> getYears(@Param("email") String email);
