@@ -22,5 +22,8 @@ public record ResumoDTO(
         BigDecimal saldoFinal,
         @Schema(title = "Gastos por categoria",
                 description = "Lista de valores gastos em cada categoria")
-        List<ValoresPorCategoria> gastosPorCategoria) {
+        List<ValoresPorCategoria> gastosPorCategoria,
+        @Schema(title = "Recebidos por categoria",
+                description = "Lista de valores recebidos em cada categoria")
+        List<ValoresPorCategoria> recebidosPorCategoria) {
 }
