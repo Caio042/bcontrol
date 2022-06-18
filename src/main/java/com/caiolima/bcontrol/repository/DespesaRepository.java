@@ -15,8 +15,18 @@ public interface DespesaRepository extends JpaRepository<Despesa, Long> {
     @Query(value = "select (count(d) > 0) from Despesa d where d.descricao = :descricao and d.data between :dataStart and :dataEnd and (:idToIgnore is null or d.id <> :idToIgnore) and d.usuario.email = :email")
     boolean isDuplicate(@Param("descricao") String descricao, @Param("dataStart") LocalDate dataStart, @Param("dataEnd") LocalDate dataEnd, @Param("idToIgnore") Long idToIgnore, @Param("email") String email);
 
-    @Query(value = "SELECT d FROM Despesa d WHERE (:descricao IS NULL OR d.descricao LIKE %:descricao%) AND d.usuario.email = :email")
-    List<Despesa> findAllByDescricao(@Param("descricao") String descricao, @Param("email") String email);
+    @Query(value = "SELECT d " +
+            "FROM Despesa d " +
+            "WHERE (:descricao IS NULL OR d.descricao LIKE %:descricao%) " +
+            "AND (:categoriaId IS NULL OR d.categoria.id = :categoriaId) " +
+            "AND (:dataInicio IS NULL OR d.data >= :dataInicio) " +
+            "AND (:dataFim IS NULL OR d.data <= :dataFim) " +
+            "AND d.usuario.email = :email")
+    List<Despesa> findAllFiltering(@Param("descricao") String descricao,
+                                   @Param("email") String email,
+                                   @Param("categoriaId") Long categoriaId,
+                                   @Param("dataInicio") LocalDate dataInicio,
+                                   @Param("dataFim") LocalDate dataFim);
 
     @Query(value = "SELECT d FROM Despesa d WHERE YEAR(d.data) = :ano AND MONTH(d.data) = :mes AND d.usuario.email = :email")
     List<Despesa> findAllByDate(@Param("ano") Integer ano, @Param("mes") Integer mes, @Param("email") String email);

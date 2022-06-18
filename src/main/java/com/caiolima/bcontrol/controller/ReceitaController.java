@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 @Tag(name = "Receitas", description = "Operações relacionadas a receitas financeiras")
@@ -47,8 +48,11 @@ public class ReceitaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ReceitaResponse>> listAll(@RequestParam(required = false) String descricao) {
-        List<Receita> receitas = service.listAll(descricao);
+    public ResponseEntity<List<ReceitaResponse>> listAll(@RequestParam(required = false) String descricao,
+                                                         @RequestParam(required = false) Long categoriaId,
+                                                         @RequestParam(required = false) LocalDate dataInicio,
+                                                         @RequestParam(required = false) LocalDate dataFim) {
+        List<Receita> receitas = service.listAll(descricao, categoriaId, dataInicio, dataFim);
         return ResponseEntity.ok(receitas
                 .stream()
                 .map(ReceitaResponse::new)
