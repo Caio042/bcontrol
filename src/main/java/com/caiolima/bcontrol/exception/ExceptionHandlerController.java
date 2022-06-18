@@ -1,6 +1,7 @@
 package com.caiolima.bcontrol.exception;
 
 import com.caiolima.bcontrol.controller.dto.response.ResponseMessage;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,7 +64,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
                 .getBindingResult()
                 .getFieldErrors()
                 .stream()
-                .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.joining(", "));
 
         return new ResponseEntity<>(new ResponseMessage(status.value(), mensagem), status);

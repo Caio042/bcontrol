@@ -1,6 +1,7 @@
 package com.caiolima.bcontrol.configuration.security.filter;
 
 import com.caiolima.bcontrol.configuration.security.JWTService;
+import com.caiolima.bcontrol.controller.dto.response.ResponseMessage;
 import com.caiolima.bcontrol.controller.dto.response.TokenDTO;
 import com.caiolima.bcontrol.model.Usuario;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +14,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -48,5 +50,14 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         TokenDTO tokens = jwtService.generateToken(usuario);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request,
+                                              HttpServletResponse response,
+                                              AuthenticationException failed) throws IOException, ServletException {
+
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        new ObjectMapper().writeValue(response.getOutputStream(), new ResponseMessage(403, "Email e/ou senha incorretos"));
     }
 }
