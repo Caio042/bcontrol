@@ -1,6 +1,8 @@
 package com.caiolima.bcontrol.service;
 
 import com.caiolima.bcontrol.exception.DuplicateUsernameException;
+import com.caiolima.bcontrol.model.Categoria;
+import com.caiolima.bcontrol.model.Tipo;
 import com.caiolima.bcontrol.model.Usuario;
 import com.caiolima.bcontrol.repository.CategoriaRepository;
 import com.caiolima.bcontrol.repository.DespesaRepository;
@@ -15,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class UsuarioService implements UserDetailsService {
@@ -40,7 +43,14 @@ public class UsuarioService implements UserDetailsService {
             throw new DuplicateUsernameException();
         }
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-        return repository.save(usuario);
+        usuario = repository.save(usuario);
+
+        Categoria categoriaDespesa = new Categoria("Outros", Tipo.DESPESA, "#000");
+        categoriaDespesa.setUsuario(usuario);
+        Categoria categoriaReceita = new Categoria("Outros", Tipo.RECEITA, "#000");
+        categoriaReceita.setUsuario(usuario);
+        categoriaRepository.saveAll(List.of(categoriaReceita, categoriaDespesa));
+        return usuario;
     }
 
     public Usuario findByUsername(String userName) {
