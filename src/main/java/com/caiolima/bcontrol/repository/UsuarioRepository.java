@@ -15,8 +15,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     void deleteByEmail(String email);
 
-    @Query(value = "SELECT " +
-            "new java.lang.Integer(DISTINCT YEAR(r.data)) " +
+    @Query(value = "SELECT DISTINCT " +
+            "new java.lang.Integer(YEAR(r.data)) " +
             "FROM Receita r " +
             "WHERE r.usuario.email = :email " +
             "UNION " +
