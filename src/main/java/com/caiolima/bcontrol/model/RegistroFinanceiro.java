@@ -16,7 +16,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
-@MappedSuperclass
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Entity
 public abstract class RegistroFinanceiro {
 
     @Id

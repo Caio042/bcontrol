@@ -4,10 +4,7 @@ import com.caiolima.bcontrol.exception.DuplicateUsernameException;
 import com.caiolima.bcontrol.model.Categoria;
 import com.caiolima.bcontrol.model.Tipo;
 import com.caiolima.bcontrol.model.Usuario;
-import com.caiolima.bcontrol.repository.CategoriaRepository;
-import com.caiolima.bcontrol.repository.DespesaRepository;
-import com.caiolima.bcontrol.repository.ReceitaRepository;
-import com.caiolima.bcontrol.repository.UsuarioRepository;
+import com.caiolima.bcontrol.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,14 +24,16 @@ public class UsuarioService implements UserDetailsService {
     private final ReceitaRepository receitaRepository;
     private final DespesaRepository despesaRepository;
     private final CategoriaRepository categoriaRepository;
+    private final RegistroFinanceiroRepository registroFinanceiroRepository;
 
     @Autowired
-    public UsuarioService(UsuarioRepository repository, PasswordEncoder passwordEncoder, ReceitaRepository receitaRepository, DespesaRepository despesaRepository, CategoriaRepository categoriaRepository) {
+    public UsuarioService(UsuarioRepository repository, PasswordEncoder passwordEncoder, ReceitaRepository receitaRepository, DespesaRepository despesaRepository, CategoriaRepository categoriaRepository, RegistroFinanceiroRepository registroFinanceiroRepository) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.receitaRepository = receitaRepository;
         this.despesaRepository = despesaRepository;
         this.categoriaRepository = categoriaRepository;
+        this.registroFinanceiroRepository = registroFinanceiroRepository;
     }
 
     @Transactional
@@ -94,6 +93,6 @@ public class UsuarioService implements UserDetailsService {
 
 
     public List<Integer> getYearAvailable() {
-        return repository.getYears(currentPrincipal());
+        return registroFinanceiroRepository.getYears(currentPrincipal());
     }
 }
