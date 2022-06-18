@@ -21,7 +21,7 @@ import java.time.LocalDate;
 public abstract class RegistroFinanceiro {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "ID", nullable = false)
     private Long id;
 
