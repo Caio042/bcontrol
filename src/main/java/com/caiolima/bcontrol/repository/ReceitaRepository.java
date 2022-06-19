@@ -21,7 +21,7 @@ public interface ReceitaRepository extends JpaRepository<Receita, Long> {
     @Query(value = "SELECT r " +
             "FROM Receita r " +
             "WHERE (:descricao IS NULL OR r.descricao LIKE %:descricao%) " +
-            "AND (:categoriaIds IS NULL OR r.categoria.id IN :categoriaIds) " +
+            "AND (:categoriaIds IS NULL OR r.categoria.id IN (:categoriaIds)) " +
             "AND (:ano IS NULL OR YEAR(r.data) = :ano) " +
             "AND (:mes IS NULL OR MONTH(r.data) = :mes) " +
             "AND r.usuario.email = :email")
