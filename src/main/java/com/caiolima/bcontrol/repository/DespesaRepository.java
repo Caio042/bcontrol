@@ -19,9 +19,9 @@ public interface DespesaRepository extends JpaRepository<Despesa, Long> {
     @Query(value = "SELECT d " +
             "FROM Despesa d " +
             "WHERE (:descricao IS NULL OR d.descricao LIKE %:descricao%) " +
-            "AND (:categoriaIds IS NULL OR d.categoria.id IN (:categoriaIds)) " +
             "AND (:ano IS NULL OR YEAR(d.data) = :ano) " +
             "AND (:mes IS NULL OR MONTH(d.data) = :mes) " +
+            "AND d.categoria.id IN :categoriaIds " +
             "AND d.usuario.email = :email")
     List<Despesa> findAllFiltering(@Param("descricao") String descricao,
                                    @Param("email") String email,
