@@ -22,8 +22,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Tag(name = "Despesas", description = "Operações relacionadas a despesas")
 @RestController
@@ -51,7 +51,7 @@ public class DespesaController {
 
     @GetMapping
     public ResponseEntity<List<DespesaResponse>> listAll(@RequestParam(required = false) String descricao,
-                                                         @RequestParam(required = false) Long[] categoriaIds,
+                                                         @RequestParam(required = false) Set<Long> categoriaIds,
                                                          @RequestParam(required = false) Integer ano,
                                                          @RequestParam(required = false) Integer mes) {
         List<Despesa> despesas = service.listAll(descricao, categoriaIds, ano, mes);

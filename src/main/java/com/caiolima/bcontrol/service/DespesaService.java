@@ -15,6 +15,7 @@ import java.time.LocalDate;
 
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class DespesaService {
@@ -51,7 +52,7 @@ public class DespesaService {
         return despesa;
     }
 
-    public List<Despesa> listAll(String descricao, Long[] categoriaIds, Integer ano, Integer mes) {
+    public List<Despesa> listAll(String descricao, Set<Long> categoriaIds, Integer ano, Integer mes) {
         return repository.findAllFiltering(descricao, usuarioService.currentPrincipal(), categoriaIds, ano, mes);
     }
 

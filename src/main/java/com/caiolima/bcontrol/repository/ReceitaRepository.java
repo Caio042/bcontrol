@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface ReceitaRepository extends JpaRepository<Receita, Long> {
@@ -26,7 +27,7 @@ public interface ReceitaRepository extends JpaRepository<Receita, Long> {
             "AND r.usuario.email = :email")
     List<Receita> findAllFiltering(@Param("descricao") String descricao,
                                    @Param("email") String email,
-                                   @Param("categoriaIds") Long[] categoriaIds,
+                                   @Param("categoriaIds") Set<Long> categoriaIds,
                                    @Param("ano") Integer ano,
                                    @Param("mes") Integer mes);
 

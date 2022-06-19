@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface DespesaRepository extends JpaRepository<Despesa, Long> {
@@ -24,7 +25,7 @@ public interface DespesaRepository extends JpaRepository<Despesa, Long> {
             "AND d.usuario.email = :email")
     List<Despesa> findAllFiltering(@Param("descricao") String descricao,
                                    @Param("email") String email,
-                                   @Param("categoriaIds") Long[] categoriaIds,
+                                   @Param("categoriaIds") Set<Long> categoriaIds,
                                    @Param("ano") Integer ano,
                                    @Param("mes") Integer mes);
 

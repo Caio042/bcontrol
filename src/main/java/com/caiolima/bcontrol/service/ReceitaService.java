@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ReceitaService {
@@ -43,7 +44,7 @@ public class ReceitaService {
         return repository.save(receita);
     }
 
-    public List<Receita> listAll(String descricao, Long[] categoriaIds, Integer ano, Integer mes) {
+    public List<Receita> listAll(String descricao, Set<Long> categoriaIds, Integer ano, Integer mes) {
         String username = usuarioService.currentPrincipal();
         return repository.findAllFiltering(descricao, username, categoriaIds, ano, mes);
     }
