@@ -49,10 +49,10 @@ public class ReceitaController {
 
     @GetMapping
     public ResponseEntity<List<ReceitaResponse>> listAll(@RequestParam(required = false) String descricao,
-                                                         @RequestParam(required = false) Long categoriaId,
-                                                         @RequestParam(required = false) LocalDate dataInicio,
-                                                         @RequestParam(required = false) LocalDate dataFim) {
-        List<Receita> receitas = service.listAll(descricao, categoriaId, dataInicio, dataFim);
+                                                         @RequestParam(required = false) Long[] categoriaIds,
+                                                         @RequestParam(required = false) Integer ano,
+                                                         @RequestParam(required = false) Integer mes) {
+        List<Receita> receitas = service.listAll(descricao, categoriaIds, ano, mes);
         return ResponseEntity.ok(receitas
                 .stream()
                 .map(ReceitaResponse::new)

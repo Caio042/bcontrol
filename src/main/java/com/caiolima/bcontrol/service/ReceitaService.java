@@ -43,9 +43,9 @@ public class ReceitaService {
         return repository.save(receita);
     }
 
-    public List<Receita> listAll(String descricao, Long categoriaId, LocalDate dataInicio, LocalDate dataFim) {
+    public List<Receita> listAll(String descricao, Long[] categoriaIds, Integer ano, Integer mes) {
         String username = usuarioService.currentPrincipal();
-        return repository.findAllFiltering(descricao, username, categoriaId, dataInicio, dataFim);
+        return repository.findAllFiltering(descricao, username, categoriaIds, ano, mes);
     }
 
     public Receita findById(Long id) {

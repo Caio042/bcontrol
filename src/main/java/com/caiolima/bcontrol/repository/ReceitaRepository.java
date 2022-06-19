@@ -20,15 +20,15 @@ public interface ReceitaRepository extends JpaRepository<Receita, Long> {
     @Query(value = "SELECT r " +
             "FROM Receita r " +
             "WHERE (:descricao IS NULL OR r.descricao LIKE %:descricao%) " +
-            "AND (:categoriaId IS NULL OR r.categoria.id = :categoriaId) " +
-            "AND (:dataInicio IS NULL OR r.data >= :dataInicio) " +
-            "AND (:dataFim IS NULL OR r.data <= :dataFim) " +
+            "AND (:categoriaIds IS NULL OR r.categoria.id IN :categoriaIds) " +
+            "AND (:ano IS NULL OR YEAR(r.data) = :ano) " +
+            "AND (:mes IS NULL OR MONTH(r.data) = :mes) " +
             "AND r.usuario.email = :email")
     List<Receita> findAllFiltering(@Param("descricao") String descricao,
                                    @Param("email") String email,
-                                   @Param("categoriaId") Long categoriaId,
-                                   @Param("dataInicio") LocalDate dataInicio,
-                                   @Param("dataFim") LocalDate dataFim);
+                                   @Param("categoriaIds") Long[] categoriaIds,
+                                   @Param("ano") Integer ano,
+                                   @Param("mes") Integer mes);
 
     @Query(value = "SELECT r from Receita r WHERE YEAR(r.data) = :ano AND MONTH(r.data) = :mes AND r.usuario.email = :email")
     List<Receita> findAllByDate(@Param("ano") Integer ano, @Param("mes") Integer mes, @Param("email") String email);

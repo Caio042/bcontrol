@@ -51,8 +51,8 @@ public class DespesaService {
         return despesa;
     }
 
-    public List<Despesa> listAll(String descricao, Long categoriaId, LocalDate dataInicio, LocalDate dataFim) {
-        return repository.findAllFiltering(descricao, usuarioService.currentPrincipal(), categoriaId, dataInicio, dataFim);
+    public List<Despesa> listAll(String descricao, Long[] categoriaIds, Integer ano, Integer mes) {
+        return repository.findAllFiltering(descricao, usuarioService.currentPrincipal(), categoriaIds, ano, mes);
     }
 
     @Transactional

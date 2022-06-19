@@ -51,10 +51,10 @@ public class DespesaController {
 
     @GetMapping
     public ResponseEntity<List<DespesaResponse>> listAll(@RequestParam(required = false) String descricao,
-                                                         @RequestParam(required = false) Long categoriaId,
-                                                         @RequestParam(required = false) LocalDate dataInicio,
-                                                         @RequestParam(required = false) LocalDate dataFim) {
-        List<Despesa> despesas = service.listAll(descricao, categoriaId, dataInicio, dataFim);
+                                                         @RequestParam(required = false) Long[] categoriaIds,
+                                                         @RequestParam(required = false) Integer ano,
+                                                         @RequestParam(required = false) Integer mes) {
+        List<Despesa> despesas = service.listAll(descricao, categoriaIds, ano, mes);
         return ResponseEntity.ok(despesas
                 .stream()
                 .map(DespesaResponse::new)
