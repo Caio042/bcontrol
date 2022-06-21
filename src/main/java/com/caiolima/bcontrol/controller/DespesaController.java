@@ -22,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -58,6 +59,7 @@ public class DespesaController {
         return ResponseEntity.ok(despesas
                 .stream()
                 .map(DespesaResponse::new)
+                .sorted(Comparator.comparing(DespesaResponse::data).reversed())
                 .toList());
     }
 

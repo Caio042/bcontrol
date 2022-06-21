@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -56,6 +57,7 @@ public class ReceitaController {
         return ResponseEntity.ok(receitas
                 .stream()
                 .map(ReceitaResponse::new)
+                .sorted(Comparator.comparing(ReceitaResponse::data).reversed())
                 .toList());
     }
 
