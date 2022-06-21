@@ -37,9 +37,6 @@ public class ReceitaService {
         Categoria categoria = categoriaService.findById(receita.getCategoria().getId());
         receita.setCategoria(categoria);
         receita.setUsuario(usuario);
-        if (isDuplicateInMonth(receita, usuario.getUsername())) {
-            throw new RegistroDuplicadoException();
-        }
 
         return repository.save(receita);
     }
@@ -61,10 +58,7 @@ public class ReceitaService {
 
     @Transactional
     public Receita update(Receita receita) {
-        String username = usuarioService.currentPrincipal();
-        if (isDuplicateInMonth(receita, username)) {
-            throw new RegistroDuplicadoException();
-        }
+
         Receita receitaDB = findById(receita.getId());
         Categoria categoria = categoriaService.findById(receita.getCategoria().getId());
         receita.setCategoria(categoria);

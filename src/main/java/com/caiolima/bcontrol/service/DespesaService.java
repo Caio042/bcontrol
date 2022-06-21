@@ -37,9 +37,7 @@ public class DespesaService {
         Categoria categoria = categoriaService.findById(despesa.getCategoria().getId());
         despesa.setCategoria(categoria);
         despesa.setUsuario(usuario);
-        if(isDuplicateInMonth(despesa, usuario.getUsername())) {
-            throw new RegistroDuplicadoException();
-        }
+
         return repository.save(despesa);
     }
 
@@ -58,9 +56,7 @@ public class DespesaService {
 
     @Transactional
     public Despesa update(Despesa despesa) {
-        if (isDuplicateInMonth(despesa, usuarioService.currentPrincipal())) {
-            throw new RegistroDuplicadoException();
-        }
+
         Despesa despesaDB = findById(despesa.getId());
         Categoria categoria = categoriaService.findById(despesa.getCategoria().getId());
         despesa.setCategoria(categoria);
